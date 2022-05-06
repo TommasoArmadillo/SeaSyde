@@ -7,9 +7,10 @@ In particular, it solves the system of differential equations using a series exp
 This package is based on the work presented [here](xxxxxxxx).
 
 ## Usage 🛠⚙️
-⚠️⚠️⚠️⚠️
+⚠️⚠️⚠️
 The code is available upon request. If you are interested please contact [Tommaso Armadillo](mailto:tommaso.armadillo@uclouvain.be).
-⚠️⚠️⚠️⚠️
+⚠️⚠️⚠️
+
 In order to use `SeaSyde` it is sufficient to import the module in a Mathematica notebook using
 ``` 
   Get["/path/to/SeaSyde.m"]
