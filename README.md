@@ -4,6 +4,8 @@
 
 In particular, it solves the system of differential equations using a series expansion approach. This means that the solution is given as a series in the kinematical variables. `SeaSyde` automatically performs the analitic continuation from the euclidean region, where usually the boundary conditions are imposed, to the physical region by moving in the complex plane associated to each kinematic variable. This way of performing the analytic continuation let us evaluate the master integrals with arbitrary internal complex masses in a straightforward way. 
 
+This package is based on the work presented [here](https://arxiv.org/abs/2205.03345).
+
 ## Usage 🛠⚙️
 In order to use `SeaSyde` first download `SeaSyde.m`. Then you can import it in a notebook using
 ``` 
