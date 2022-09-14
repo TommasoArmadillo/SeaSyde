@@ -1,0 +1,3461 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    149841,       3453]
+NotebookOptionsPosition[    133975,       3229]
+NotebookOutlinePosition[    134411,       3246]
+CellTagsIndexPosition[    134368,       3243]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"Quit", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.8679851232912397`*^9, 3.867985124343295*^9}},
+ CellLabel->
+  "In[3506]:=",ExpressionUUID->"53e6e267-f618-4d18-9e03-72db4e6d9ffc"],
+
+Cell[CellGroupData[{
+
+Cell["A pedagogical example", "Title",
+ CellChangeTimes->{{3.837677981076132*^9, 3.837678005422291*^9}, {
+  3.852196528250123*^9, 3.852196552625681*^9}, {3.8678112513165703`*^9, 
+  3.867811257361559*^9}},ExpressionUUID->"52004069-4a46-4cca-a2d1-\
+3f70a1289cf9"],
+
+Cell["\<\
+Here we are going to show the potentialities of the package SeaSyde` by \
+solving the differential equation presented in eq. (1) in arXiv:2205.03345.\
+\>", "Text",
+ CellChangeTimes->{{3.837678011299326*^9, 3.8376781090377398`*^9}, {
+  3.837678159863822*^9, 3.837678266603896*^9}, {3.852196579440469*^9, 
+  3.852196581162704*^9}, {3.867811284443128*^9, 
+  3.8678113794840727`*^9}},ExpressionUUID->"c1bdd74f-4131-4d2f-afaf-\
+57f3999f8633"],
+
+Cell[CellGroupData[{
+
+Cell["Import the package and define the differential equation", "Subsection",
+ CellChangeTimes->{{3.8521980878536253`*^9, 3.8521980897081423`*^9}, {
+  3.867811393259989*^9, 
+  3.867811396574833*^9}},ExpressionUUID->"76e50ed3-e741-40ca-8751-\
+0f3f542adce4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "../SeaSyde.m"}]}], "Input",
+ CellEvaluationLanguage->"Python",
+ CellChangeTimes->{{3.826691539325163*^9, 3.8266915934835863`*^9}, {
+  3.8266917180843573`*^9, 3.826691725377472*^9}, {3.826691760454109*^9, 
+  3.826691764889742*^9}, {3.8266918723117943`*^9, 3.826691912818181*^9}, {
+  3.826692270109137*^9, 3.826692308085437*^9}, {3.838430953708661*^9, 
+  3.8384309542364073`*^9}, {3.838972392959117*^9, 3.838972403234231*^9}, {
+  3.850897246899778*^9, 3.850897248365816*^9}, {3.852196586390274*^9, 
+  3.852196587080482*^9}, {3.8605603692239323`*^9, 3.86056037157023*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"93a87708-3bf3-4e9e-aaf1-c465af7665fe"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"+++++ SeaSyde` +++++\\nVersion 1.1.0\"\>"], "Print",
+ CellChangeTimes->{3.860560372033544*^9, 3.8609214693164043`*^9, 
+  3.86602594206743*^9, 3.867811400138938*^9, 3.8679851300064783`*^9, 
+  3.869822504156274*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"93aceef9-37b5-4846-bcbb-3032fe46dae4"],
+
+Cell[BoxData["\<\"SeaSyde is a package for solving the system of differential \
+equation associated to the Master Integrals of a given topology.\"\>"], \
+"Print",
+ CellChangeTimes->{3.860560372033544*^9, 3.8609214693164043`*^9, 
+  3.86602594206743*^9, 3.867811400138938*^9, 3.8679851300064783`*^9, 
+  3.869822504157213*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"c35bea21-4bb0-41b8-b905-e7613d2d9f6c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"For any question or comment, please contact: \\n\"\>", 
+   "\[InvisibleSpace]", 
+   TemplateBox[{"\"T. Armadillo\"", "mailto:tommaso.armadillo@uclouvain.be"},
+    "HyperlinkURL"], "\[InvisibleSpace]", "\<\", \"\>", "\[InvisibleSpace]", 
+   TemplateBox[{"\"R. Bonciani\"", "mailto:roberto.bonciani@roma1.infn.it"},
+    "HyperlinkURL"], "\[InvisibleSpace]", "\<\", \"\>", "\[InvisibleSpace]", 
+   TemplateBox[{"\"S. Devoto\"", "mailto:simone.devoto@unimi.it"},
+    "HyperlinkURL"], "\[InvisibleSpace]", "\<\", \"\>", "\[InvisibleSpace]", 
+   TemplateBox[{"\"N. Rana\"", "mailto:narayan.rana@unimi.it"},
+    "HyperlinkURL"], "\[InvisibleSpace]", "\<\" or \"\>", "\[InvisibleSpace]", 
+   TemplateBox[{"\"A. Vicini\"", "mailto:alessandro.vicini@mi.infn.it"},
+    "HyperlinkURL"], "\[InvisibleSpace]", "\<\".\"\>"}],
+  SequenceForm["For any question or comment, please contact: \n", 
+   Hyperlink["T. Armadillo", "mailto:tommaso.armadillo@uclouvain.be"], ", ", 
+   Hyperlink["R. Bonciani", "mailto:roberto.bonciani@roma1.infn.it"], ", ", 
+   Hyperlink["S. Devoto", "mailto:simone.devoto@unimi.it"], ", ", 
+   Hyperlink["N. Rana", "mailto:narayan.rana@unimi.it"], " or ", 
+   Hyperlink["A. Vicini", "mailto:alessandro.vicini@mi.infn.it"], "."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.860560372033544*^9, 3.8609214693164043`*^9, 
+  3.86602594206743*^9, 3.867811400138938*^9, 3.8679851300064783`*^9, 
+  3.869822504168659*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"9ed5c696-53e5-4eab-b8fa-c277aff15fa6"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"For the latest version please see the \"\>", 
+   "\[InvisibleSpace]", 
+   TemplateBox[{
+    "\"GitHub repository\"", "https://github.com/TommasoArmadillo/SeaSyde"},
+    "HyperlinkURL"], "\[InvisibleSpace]", "\<\".\"\>"}],
+  SequenceForm["For the latest version please see the ", 
+   Hyperlink[
+   "GitHub repository", "https://github.com/TommasoArmadillo/SeaSyde"], "."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.860560372033544*^9, 3.8609214693164043`*^9, 
+  3.86602594206743*^9, 3.867811400138938*^9, 3.8679851300064783`*^9, 
+  3.869822504172929*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"db698c41-5059-4f5c-8396-a2cc15c85a95"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Equation", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"f", "'"}], "[", "x", "]"}], "+", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         SuperscriptBox["x", "2"], "-", 
+         RowBox[{"4", "x"}], "+", "5"}]], 
+       RowBox[{"f", "[", "x", "]"}]}]}], "==", 
+     FractionBox["1", 
+      RowBox[{"x", "+", "2"}]]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"BoundaryCondition", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"f", "[", "0", "]"}], "==", "1"}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"MasterIntegral", "=", 
+   RowBox[{"{", 
+    RowBox[{"f", "[", "x", "]"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"PointBC", "=", 
+   RowBox[{"{", "0", "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.837678377322291*^9, 3.837678386025957*^9}, {
+   3.8376784391237926`*^9, 3.837678639681345*^9}, {3.837679992167068*^9, 
+   3.837680019875804*^9}, {3.837681632650565*^9, 3.837681633029002*^9}, {
+   3.837683330212955*^9, 3.83768334352238*^9}, {3.839910899441655*^9, 
+   3.8399109308995543`*^9}, {3.852197352214015*^9, 3.8521974626524*^9}, 
+   3.8521980973188343`*^9, {3.8521981462844543`*^9, 3.8521981466735992`*^9}, {
+   3.867811404276792*^9, 3.86781149173203*^9}},
+ CellLabel->
+  "In[365]:=",ExpressionUUID->"388b8097-299e-41dc-8c90-ee3b807195d7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Configure and setup the package ", "Subsection",
+ CellChangeTimes->{{3.8521981103171177`*^9, 
+  3.85219811134402*^9}},ExpressionUUID->"16ecb643-5c76-441c-bd0b-\
+3189b4f306e5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Configuration", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"EpsilonOrder", "\[Rule]", "0"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ExpansionOrder", "\[Rule]", "50"}]}], "\[IndentingNewLine]", 
+    "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"UpdateConfiguration", "[", "Configuration", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"SetSystemOfDifferentialEquation", "[", 
+  RowBox[{"Equation", ",", "BoundaryCondition", ",", "MasterIntegral", ",", 
+   RowBox[{"{", 
+    RowBox[{"x", "+", 
+     RowBox[{"I", " ", "\[Delta]"}]}], "}"}], ",", "PointBC"}], 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.837678701210907*^9, 3.8376787640089817`*^9}, {
+   3.837680899749332*^9, 3.837680900545343*^9}, {3.837681054765936*^9, 
+   3.837681054923389*^9}, {3.837681622000589*^9, 3.837681628761798*^9}, {
+   3.838198768608016*^9, 3.8381987981964483`*^9}, {3.838207502745967*^9, 
+   3.8382075028290653`*^9}, {3.838209907323311*^9, 3.83820990745046*^9}, {
+   3.8382107620300703`*^9, 3.838210762186516*^9}, {3.838366393057622*^9, 
+   3.838366393229851*^9}, {3.8383812819406013`*^9, 3.8383812845720253`*^9}, {
+   3.838382312457139*^9, 3.838382312593186*^9}, {3.83840276487228*^9, 
+   3.838402765060885*^9}, {3.838402855084021*^9, 3.8384028552862864`*^9}, {
+   3.838403290363078*^9, 3.838403293629636*^9}, {3.8392653147983713`*^9, 
+   3.8392653162971897`*^9}, {3.839266332268292*^9, 3.839266333484083*^9}, {
+   3.839302472274185*^9, 3.839302472442268*^9}, {3.8393055924056892`*^9, 
+   3.839305592532984*^9}, {3.839410688786603*^9, 3.839410693547776*^9}, {
+   3.839411395988476*^9, 3.8394113977438097`*^9}, {3.8395769037484293`*^9, 
+   3.839576904039111*^9}, {3.839577110054021*^9, 3.839577110573955*^9}, {
+   3.8395798441536837`*^9, 3.839579844351253*^9}, 3.83958006709267*^9, {
+   3.8395815666056128`*^9, 3.839581588947033*^9}, {3.839584239214542*^9, 
+   3.839584241057633*^9}, {3.839899972408071*^9, 3.839899972543414*^9}, {
+   3.83990055334569*^9, 3.839900555001236*^9}, {3.839900654307517*^9, 
+   3.839900656004703*^9}, {3.839900827978463*^9, 3.8399008281780853`*^9}, {
+   3.8399040542467823`*^9, 3.839904054465168*^9}, {3.839914503671647*^9, 
+   3.8399145090360537`*^9}, {3.8401307174527197`*^9, 3.840130727965826*^9}, {
+   3.847814669558434*^9, 3.847814673086158*^9}, {3.8521981242161407`*^9, 
+   3.852198155394972*^9}, {3.852370290706232*^9, 3.8523703017250433`*^9}, {
+   3.860921478861116*^9, 3.860921479517901*^9}, {3.8678115027853823`*^9, 
+   3.867811527622315*^9}, {3.86781163218898*^9, 3.867811632467609*^9}},
+ CellLabel->
+  "In[369]:=",ExpressionUUID->"baccd777-f205-4522-902f-5d2fd59845d4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"Updated \"\>", 
+   "\[InvisibleSpace]", "\<\"EpsilonOrder\"\>", 
+   "\[InvisibleSpace]", "\<\" parameter, new value -> \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm[
+  "SeaSyde: ", "Updated ", "EpsilonOrder", " parameter, new value -> ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972117984*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"771aa904-abb7-4a4e-b77a-78de0396eb45"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"Updated \"\>", 
+   "\[InvisibleSpace]", "\<\"ExpansionOrder\"\>", 
+   "\[InvisibleSpace]", "\<\" parameter, new value -> \"\>", 
+   "\[InvisibleSpace]", "50"}],
+  SequenceForm[
+  "SeaSyde: ", "Updated ", "ExpansionOrder", " parameter, new value -> ", 50],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972120562*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"2f2e11b6-398b-42f3-aa75-db668ed6bf2a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" kinematics variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " kinematics variables ", {$CellContext`x}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972123221*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"bff9a006-2e12-45b8-b4ef-0c1b033a7897"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The Feynman prescriptions for the variables are \
+\"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"\[ImaginaryI]", " ", "\[Delta]"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The Feynman prescriptions for the variables are ", {
+   Complex[0, 1] $CellContext`\[Delta]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972125372*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"652aa735-2100-4794-99fe-b857d21d4754"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" Master Integrals\"\>"}],
+  SequenceForm["SeaSyde: ", "There are ", 1, " Master Integrals"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972127221*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"eea9b9d1-f78d-4432-951a-12d5f1921398"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are imposed in \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"x", "\[Equal]", "0.`"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The boundary conditions are imposed in ", $CellContext`x == 
+   0.],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972128997*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"e57f5d40-9620-4228-9dfe-fe430e257bf6"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are given as precise \
+value of the solution.\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The boundary conditions are given as precise value of the solution."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.8698239721308813`*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"804d1078-21c3-4c85-afa9-c7dfa01c6591"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\" equations and \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" boundary conditions\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " equations and ", 1, " boundary conditions"],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972132881*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"b206684d-7605-45d2-a4a5-8180764d07b4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The possible singularities for the kinematics \
+variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}], "\[InvisibleSpace]", "\<\" are respectively \"\>",
+    "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "2.`"}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "-", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "+", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}]}], "}"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The possible singularities for the kinematics variables ", \
+{$CellContext`x}, " are respectively ", {{-2., 
+     Complex[2., -1.], 
+     Complex[2., 1.]}}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972134973*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"7761f6dc-e2b2-4010-a59a-bfacc9d1254a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The system of differential equation has been set \
+and expanded in \[Epsilon]\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The system of differential equation has been set and expanded in \
+\[Epsilon]"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.869821093196973*^9, 3.869822507556541*^9, 
+  3.869823972136957*^9},
+ CellLabel->
+  "During evaluation of \
+In[369]:=",ExpressionUUID->"2ab1f372-ae62-4bf6-8d6e-d7cdfb6d0b06"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Solving the differential equation", "Subsection",
+ CellChangeTimes->{{3.8678115423003073`*^9, 
+  3.867811555612965*^9}},ExpressionUUID->"70fb17ec-b721-416b-9fd6-\
+23e9aa6a6bad"],
+
+Cell["\<\
+We can solve the equation in the point where the boundary conditions are \
+imposed, e.g. x=0.\
+\>", "Text",
+ CellChangeTimes->{{3.86781155799384*^9, 
+  3.867811589855104*^9}},ExpressionUUID->"187e87ed-754e-44da-849b-\
+8281dd8a4168"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SolveSystem", "[", "x", "]"}]], "Input",
+ CellChangeTimes->{{3.86781159378529*^9, 3.867811598813871*^9}},
+ CellLabel->
+  "In[372]:=",ExpressionUUID->"6e6f6edb-f3d6-47ed-9034-5c2d01f0a609"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Solving equation for \[Epsilon] order \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["Solving equation for \[Epsilon] order ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.8678115992608633`*^9, 3.8678116357619877`*^9, 
+  3.867985141922245*^9, 3.869822510632535*^9, 3.869823974685666*^9},
+ CellLabel->
+  "During evaluation of \
+In[372]:=",ExpressionUUID->"569107bf-7074-4ff1-b41b-7eacbd99cf49"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"I solved the system of equation. The error estimate is: \"\>", 
+   "\[InvisibleSpace]", "5.5167162609996525`*^-17", 
+   "\[InvisibleSpace]", "\<\".\"\>"}],
+  SequenceForm[
+  "I solved the system of equation. The error estimate is: ", 
+   5.5167162609996525`*^-17, "."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.8678115992608633`*^9, 3.8678116357619877`*^9, 
+  3.867985141922245*^9, 3.869822510632535*^9, 3.869823974821762*^9},
+ CellLabel->
+  "During evaluation of \
+In[372]:=",ExpressionUUID->"ac54f81a-1d74-4333-9702-67284d63858c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+We can compare the first few terms with the exact result provided in eq. (3), \
+(4) and (5).\
+\>", "Text",
+ CellChangeTimes->{{3.867811664677648*^9, 
+  3.86781169830224*^9}},ExpressionUUID->"a487bd35-c1dc-43ac-a25b-\
+30912b417c9b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ExactResult", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      FractionBox["1", "2"], "x"}], "-", 
+     RowBox[{
+      FractionBox["7", "40"], 
+      SuperscriptBox["x", "2"]}], "+", 
+     RowBox[{
+      FractionBox["2", "75"], 
+      SuperscriptBox["x", "3"]}], "+", 
+     RowBox[{
+      FractionBox["1", "5"], 
+      RowBox[{"(", 
+       RowBox[{"5", "-", "x", "-", 
+        RowBox[{
+         FractionBox["3", "10"], 
+         SuperscriptBox["x", "2"]}], "-", 
+        RowBox[{
+         FractionBox["11", "150"], 
+         SuperscriptBox["x", "3"]}]}], ")"}]}]}], "//", "Expand"}], "//", 
+   "N"}]}]], "Input",
+ CellChangeTimes->{{3.867811701164031*^9, 3.8678117786466017`*^9}},
+ CellLabel->
+  "In[373]:=",ExpressionUUID->"f7da4c14-15c0-477c-b9c5-d65847396d62"],
+
+Cell[BoxData[
+ RowBox[{"1.`", "\[VeryThinSpace]", "+", 
+  RowBox[{"0.3`", " ", "x"}], "-", 
+  RowBox[{"0.235`", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"0.012`", " ", 
+   SuperscriptBox["x", "3"]}]}]], "Output",
+ CellChangeTimes->{{3.8678117638233*^9, 3.867811779042589*^9}, 
+   3.867985146709199*^9, 3.869822512697259*^9, 3.869823976133754*^9},
+ CellLabel->
+  "Out[373]=",ExpressionUUID->"447da09f-1365-4dd3-8a39-bd06cfb1ef9b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Solution", "[", "]"}], "/.", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["x", "b_"], "/;", 
+     RowBox[{"b", ">", "3"}]}], "->", "0"}]}], "//", "N"}]], "Input",
+ CellChangeTimes->{{3.867811803926038*^9, 3.867811817757016*^9}},
+ CellLabel->
+  "In[374]:=",ExpressionUUID->"1a39c160-20ff-4efd-97da-a11892c1c52d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.`", "\[VeryThinSpace]", "+", 
+   RowBox[{"0.3`", " ", "x"}], "-", 
+   RowBox[{"0.235`", " ", 
+    SuperscriptBox["x", "2"]}], "+", 
+   RowBox[{"0.012`", " ", 
+    SuperscriptBox["x", "3"]}]}], "}"}]], "Output",
+ CellChangeTimes->{3.867811818392816*^9, 3.867985148810481*^9, 
+  3.869822514333593*^9, 3.8698239774607983`*^9},
+ CellLabel->
+  "Out[374]=",ExpressionUUID->"b750f781-8ff4-491f-ab58-6baa4901cd63"]
+}, Open  ]],
+
+Cell["\<\
+The singularities are in x=-2, x=2\[PlusMinus]\[ImaginaryI]. The closest to \
+the centre of the series, x=0, is x=-2, hence the radius of convergence is \
+\[Rho]=|-2-0|=2. We can see that explicitly by plotting the solution along \
+the real axes.\
+\>", "Text",
+ CellChangeTimes->{{3.8678119103183107`*^9, 3.8678119915447083`*^9}, {
+  3.8678120468736067`*^9, 
+  3.867812092644199*^9}},ExpressionUUID->"758124ee-e9da-4e9b-ac95-\
+1d9740ac096b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"Solution", "[", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", 
+     RowBox[{"-", "2.3"}], ",", "2.3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8678119942927713`*^9, 3.8678120244521837`*^9}},
+ CellLabel->
+  "In[375]:=",ExpressionUUID->"bddb63e0-0506-471a-b421-9686b5d3a19d"],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {}, 
+    TagBox[
+     {RGBColor[0.368417, 0.506779, 0.709798], AbsoluteThickness[1.6], Opacity[
+      1.], LineBox[CompressedData["
+1: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
+       "]]},
+     Annotation[#, "Charting`Private`Tag$437689#1"]& ]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultMeshStyle" -> 
+    AbsolutePointSize[6], "ScalingFunctions" -> None, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{-2.3, 2.3}, {-2.8309497913830395`, 1.0956350361621892`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.05], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.867812009662386*^9, 3.867812024729506*^9}, 
+   3.867985154697382*^9, 3.8698225167495203`*^9, 3.869823980186863*^9},
+ CellLabel->
+  "Out[375]=",ExpressionUUID->"7b6e8043-18d4-4b2c-8260-e9264ef27cdf"]
+}, Open  ]],
+
+Cell["If we go over x=2 the solution does not converge anymore.", "Text",
+ CellChangeTimes->{{3.8678121123835278`*^9, 
+  3.867812127649569*^9}},ExpressionUUID->"c5f5b09a-844d-4e88-b405-\
+d8dd7a7a2c2c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Extending the solution", "Subsection",
+ CellChangeTimes->{{3.8678121334143476`*^9, 
+  3.867812139928052*^9}},ExpressionUUID->"ab4bd9f9-9329-4204-9848-\
+00a00ba07850"],
+
+Cell["\<\
+If we want the solution in another point, e.g. x=-1+0.5\[ImaginaryI], we can \
+attach multiple series solutions.\
+\>", "Text",
+ CellChangeTimes->{{3.8678122244911623`*^9, 3.867812232469408*^9}, {
+  3.867812264810409*^9, 3.867812314423205*^9}, {3.867812345347191*^9, 
+  3.867812371266788*^9}},ExpressionUUID->"e00e7c1f-aa2e-4f5f-a1c7-\
+abc6543792a3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TransportBoundaryConditions", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"-", "1"}], "+", 
+    RowBox[{"0.5", "\[ImaginaryI]"}]}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.867812316518672*^9, 3.8678123362311153`*^9}, {
+  3.867812367198783*^9, 3.8678123681439333`*^9}},
+ CellLabel->
+  "In[376]:=",ExpressionUUID->"b0b5d4d9-8adc-4bf6-a345-50a1171901b4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"Moving following these points: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", 
+     RowBox[{
+      RowBox[{"-", "1.`"}], "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}], "}"}], 
+   "\[InvisibleSpace]", "\<\", avoiding singularities. Here you can see the \
+path in the complex plane for the kinematic variable \"\>", 
+   "\[InvisibleSpace]", "x"}],
+  SequenceForm["SeaSyde: ", "Moving following these points: ", {0., 
+    Complex[-1., 0.5]}, 
+   ", avoiding singularities. Here you can see the path in the complex plane \
+for the kinematic variable ", $CellContext`x],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867812337672523*^9, 3.867812373711957*^9, 
+  3.867985163473117*^9, 3.869822519168418*^9, 3.869823982346784*^9},
+ CellLabel->
+  "During evaluation of \
+In[376]:=",ExpressionUUID->"9026ab48-64df-4d24-bd3e-350ad7db5598"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[1, 0, 0], LineBox[{{-102., 0}, {-2., 0}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., -1.}, {2., -1.}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., 1.}, {2., 1.}}]}, 
+   {RGBColor[0, 0, 0], LineBox[{{0, 0}, {-1., 0.5}}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {-2., 0}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., -1.}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., 1.}]}},
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Re x\"", TraditionalForm], 
+    FormBox["\"Im x\"", TraditionalForm]},
+  PlotLabel->FormBox["\"Kinematic variable: x\"", TraditionalForm],
+  PlotRange->{{-1.5, 0.5}, {-0.5, 1.}}]], "Print",
+ CellChangeTimes->{3.867812337672523*^9, 3.867812373711957*^9, 
+  3.867985163473117*^9, 3.869822519168418*^9, 3.869823982349704*^9},
+ CellLabel->
+  "During evaluation of \
+In[376]:=",ExpressionUUID->"022fc533-d0b0-41da-9476-587b8aa905d4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"Moving from the point \"\>", "\[InvisibleSpace]",
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "0.`", 
+   "\[InvisibleSpace]", "\<\" to \"\>", "\[InvisibleSpace]", "x", 
+   "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], 
+   "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", "x",
+    "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "1.`"}], "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}], " ", "tInt"}]}],
+  SequenceForm[
+  "SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 0., 
+   " to ", $CellContext`x, "=", 
+   Complex[-1., 0.5], ", along the line ", $CellContext`x, "=", 
+   Complex[-1., 0.5] $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867812337672523*^9, 3.867812373711957*^9, 
+  3.867985163473117*^9, 3.869822519168418*^9, 3.869823982359758*^9},
+ CellLabel->
+  "During evaluation of \
+In[376]:=",ExpressionUUID->"ef45cd4d-23d4-407e-a970-fb9f7d2aeb69"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "0.8944271909999159`"}], "+", 
+    RowBox[{"0.4472135954999579`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-0.8944271909999159, 0.4472135954999579]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867812337672523*^9, 3.867812373711957*^9, 
+  3.867985163473117*^9, 3.869822519168418*^9, 3.8698239824863358`*^9},
+ CellLabel->
+  "During evaluation of \
+In[376]:=",ExpressionUUID->"c7395741-e6a9-4800-9861-09f008c384b6"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"I arrived at \"\>", 
+   "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], 
+   "\[InvisibleSpace]", "\<\". The error estimate is: \"\>", 
+   "\[InvisibleSpace]", "5.5167162609996525`*^-17", 
+   "\[InvisibleSpace]", "\<\".\\nUse Solution[] or SolutionValue[] to access \
+the solution, or CreteGraph to plot it.\"\>"}],
+  SequenceForm["SeaSyde: ", "I arrived at ", $CellContext`x, "=", 
+   Complex[-1., 0.5], ". The error estimate is: ", 5.5167162609996525`*^-17, 
+   ".\nUse Solution[] or SolutionValue[] to access the solution, or \
+CreteGraph to plot it."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867812337672523*^9, 3.867812373711957*^9, 
+  3.867985163473117*^9, 3.869822519168418*^9, 3.869823982722102*^9},
+ CellLabel->
+  "During evaluation of \
+In[376]:=",ExpressionUUID->"f558443a-c81b-4876-9925-59c30e0ab75d"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+And we can access the value of the solution in x=-1+0.5\[ImaginaryI] by using \
+the SolutionValue[] method.\
+\>", "Text",
+ CellChangeTimes->{{3.867812489651198*^9, 
+  3.867812525191718*^9}},ExpressionUUID->"b1e106eb-7278-4988-b7a6-\
+4db48d77a5c0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SolutionValue", "[", "]"}], "//", "N"}]], "Input",
+ CellChangeTimes->{{3.867812379071907*^9, 3.867812383724086*^9}},
+ CellLabel->
+  "In[377]:=",ExpressionUUID->"0e1fe3b9-e23f-4e0f-ac4e-6a9d4e5ea23d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.5459121763063581`", "\[VeryThinSpace]", "+", 
+   RowBox[{"0.4432340370933742`", " ", "\[ImaginaryI]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.8678123838766403`*^9, 3.867985169064124*^9, 
+  3.869822521381619*^9, 3.86982398389879*^9},
+ CellLabel->
+  "Out[377]=",ExpressionUUID->"ff1b658a-cf77-4303-998c-4810dbb27216"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Crossing a branch-cut", "Subsection",
+ CellChangeTimes->{{3.867812571016432*^9, 
+  3.867812577556643*^9}},ExpressionUUID->"522a301f-6b5e-4f73-94eb-\
+9878e955f973"],
+
+Cell["\<\
+We might want to overcome a branch-cut. In order to do so it is important to \
+circumvent the singularities to the right\
+\>", "Text",
+ CellChangeTimes->{{3.867812579599916*^9, 3.867812600046138*^9}, {
+  3.867985185988668*^9, 
+  3.867985223346944*^9}},ExpressionUUID->"dc337902-5105-489d-a885-\
+31a23bc22a6f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SetSystemOfDifferentialEquation", "[", 
+  RowBox[{"Equation", ",", "BoundaryCondition", ",", "MasterIntegral", ",", 
+   RowBox[{"{", 
+    RowBox[{"x", "+", 
+     RowBox[{"I", " ", "\[Delta]"}]}], "}"}], ",", "PointBC"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"TransportVariable", "[", 
+  RowBox[{"x", ",", 
+   RowBox[{"2", "\[ImaginaryI]"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.867812613013447*^9, 3.867812664819982*^9}, {
+   3.867812795291431*^9, 3.867812804665256*^9}, 3.867813402860455*^9, {
+   3.869821675491557*^9, 3.869821676506675*^9}},
+ CellLabel->
+  "In[378]:=",ExpressionUUID->"eb2f82be-4783-4937-9eda-7ad5a5f3c734"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" kinematics variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " kinematics variables ", {$CellContext`x}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239854490147`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"353e4c45-3be8-4259-9ab4-e01135b45370"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The Feynman prescriptions for the variables are \
+\"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"\[ImaginaryI]", " ", "\[Delta]"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The Feynman prescriptions for the variables are ", {
+   Complex[0, 1] $CellContext`\[Delta]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985451126*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"c3eff60d-9829-4275-9104-620c1b6c10be"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" Master Integrals\"\>"}],
+  SequenceForm["SeaSyde: ", "There are ", 1, " Master Integrals"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985453224*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"74783a84-493c-48a6-9d3a-dcb57b2c6f7f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are imposed in \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"x", "\[Equal]", "0.`"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The boundary conditions are imposed in ", $CellContext`x == 
+   0.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985454814*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"59beb053-7b95-4aca-8cac-e57309476d04"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are given as precise \
+value of the solution.\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The boundary conditions are given as precise value of the solution."],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985456387*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"88d78881-e9cb-4b21-977d-cb754aefb9f1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\" equations and \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" boundary conditions\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " equations and ", 1, " boundary conditions"],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239854579563`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"cde42caf-48b3-49ea-b4d5-7c1bde8cdfb8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The possible singularities for the kinematics \
+variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}], "\[InvisibleSpace]", "\<\" are respectively \"\>",
+    "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "2.`"}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "-", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "+", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}]}], "}"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The possible singularities for the kinematics variables ", \
+{$CellContext`x}, " are respectively ", {{-2., 
+     Complex[2., -1.], 
+     Complex[2., 1.]}}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985459565*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"f0454192-01d3-40d4-9556-145abd1f92f1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The system of differential equation has been set \
+and expanded in \[Epsilon]\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The system of differential equation has been set and expanded in \
+\[Epsilon]"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239854611063`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"d6ce4623-7188-4d10-9a00-404147f64bdd"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"Moving following these points: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", "2.5`", ",", 
+     RowBox[{"2.5`", "\[VeryThinSpace]", "+", 
+      RowBox[{"2.`", " ", "\[ImaginaryI]"}]}], ",", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"2.`", " ", "\[ImaginaryI]"}]}]}], "}"}], 
+   "\[InvisibleSpace]", "\<\", avoiding singularities. Here you can see the \
+path in the complex plane for the kinematic variable \"\>", 
+   "\[InvisibleSpace]", "x"}],
+  SequenceForm["SeaSyde: ", "Moving following these points: ", {0., 2.5, 
+    Complex[2.5, 2.], 
+    Complex[0., 2.]}, 
+   ", avoiding singularities. Here you can see the path in the complex plane \
+for the kinematic variable ", $CellContext`x],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.86982398546255*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"04865f86-f116-4aa3-b29f-afc706af10a1"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[1, 0, 0], LineBox[{{-102., 0}, {-2., 0}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., -1.}, {2., -1.}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., 1.}, {2., 1.}}]}, 
+   {RGBColor[0, 0, 0], LineBox[{{0, 0}, {2.5, 0}, {2.5, 2.}, {0, 2.}}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {-2., 0}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., -1.}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., 1.}]}},
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Re x\"", TraditionalForm], 
+    FormBox["\"Im x\"", TraditionalForm]},
+  PlotLabel->FormBox["\"Kinematic variable: x\"", TraditionalForm],
+  PlotRange->{{-0.5, 3.}, {-0.5, 2.5}}]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985464443*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"a4cdb9a5-78a2-46de-a7d5-ef7c28a6411c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"Moving from the point \"\>", "\[InvisibleSpace]",
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "0.`", 
+   "\[InvisibleSpace]", "\<\" to \"\>", "\[InvisibleSpace]", "x", 
+   "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "2.5`", 
+   "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", "x",
+    "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{"2.5`", " ", "tInt"}]}],
+  SequenceForm[
+  "SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 0., 
+   " to ", $CellContext`x, "=", 2.5, ", along the line ", $CellContext`x, "=",
+    2.5 $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985472295*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"69c39304-5f7c-4195-b5fe-b70745b71011"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "1.`"}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 1.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239855866327`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"07122f62-9236-41c8-90d2-562bf6a1a446"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   "1.7071067811865475`"}],
+  SequenceForm[
+  "SeaSyde: ", "The new point is: ", $CellContext`x, "=", 1.7071067811865475`],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239856742573`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"daa0180d-544c-4f6e-bf34-b911142a6a32"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   "2.2281121644665345`"}],
+  SequenceForm[
+  "SeaSyde: ", "The new point is: ", $CellContext`x, "=", 2.2281121644665345`],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823985781476*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"c869f2ca-8377-4455-86ca-fd0a19366575"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "2.5`", "\[InvisibleSpace]", "\<\" to \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "2.5`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"2.`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "2.5`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"2.`", " ", "\[ImaginaryI]"}]}], ")"}], " ", "tInt"}]}],
+  SequenceForm[
+  "SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 2.5, 
+   " to ", $CellContext`x, "=", 
+   Complex[2.5, 2.], ", along the line ", $CellContext`x, "=", 2.5 + 
+   Complex[0., 2.] $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239858876667`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"c9654434-1f59-4e84-8c8a-e1eb570a03b6"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "2.5`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{"0.5590169943749475`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[2.5, 0.5590169943749475]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823986003868*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"c9a84bdd-eb69-4ebf-b077-bcd0d9f849bd"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "2.5`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{"0.8923584151622932`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[2.5, 0.8923584151622932]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823986122547*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"3c052bde-da64-471d-a901-506764a2d4d7"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "2.5`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{"1.148086156513507`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[2.5, 1.148086156513507]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823986241671*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"123634ad-2f85-479a-9b18-9090655de014"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "2.5`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{"1.4088204608114565`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[2.5, 1.4088204608114565`]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823986360763*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"fdc7e9ce-94aa-4595-b7ca-3dae9543b7c5"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "2.5`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{"1.7317500851795575`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[2.5, 1.7317500851795575`]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239864800673`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"4111a038-f3a2-4c4c-a271-a88d777862f8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "2.5`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"2.`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\" to \"\>", "\[InvisibleSpace]", "x", 
+    "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "0.`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"2.`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{"2.5`", "\[VeryThinSpace]", "+", 
+      RowBox[{"2.`", " ", "\[ImaginaryI]"}]}], ")"}]}], "-", 
+   RowBox[{"2.5`", " ", "tInt"}]}],
+  SequenceForm["SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 
+   Complex[2.5, 2.], " to ", $CellContext`x, "=", 
+   Complex[0., 2.], ", along the line ", $CellContext`x, "=", 
+   Complex[2.5, 2.] - 2.5 $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.8698239866005287`*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"48ce262e-6380-450a-a16a-852fc8ebc010"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    "1.9409830056250525`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{"2.`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[1.9409830056250525`, 2.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823986717217*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"1693eed4-f363-4c80-92ad-9c5ef9358d04"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    "1.440113011109247`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{"2.`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[1.440113011109247, 2.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823986836856*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"43d6857f-5148-49b3-aa20-e3edc879668a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    "0.8670786665169804`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{"2.`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[0.8670786665169804, 2.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823986955872*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"db0b2bd9-d94f-4476-b214-943f3dcc1fa0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    "0.11151418418258961`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{"2.`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[0.11151418418258961`, 2.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823987076548*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"8f57e1d4-befa-4f77-a262-27478f581497"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"I arrived at \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"2.`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\". The error estimate is: \"\>", 
+    "\[InvisibleSpace]", "5.10206418479089`*^-18", 
+    "\[InvisibleSpace]", "\<\".\\nUse Solution[] or SolutionValue[] to access \
+the solution, or CreteGraph to plot it.\"\>"}]}],
+  SequenceForm["SeaSyde: ", "I arrived at ", $CellContext`x, "=", 
+   Complex[0., 2.], ". The error estimate is: ", 5.10206418479089*^-18, 
+   ".\nUse Solution[] or SolutionValue[] to access the solution, or \
+CreteGraph to plot it."],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867812628658113*^9, 3.8678126657214117`*^9, 3.867812805480011*^9, 
+   3.867813403274783*^9, 3.867985179711914*^9, 3.869821103760788*^9, 
+   3.869821148561405*^9, 3.869821204391634*^9, 3.869821273323142*^9, 
+   3.869821457790511*^9, {3.8698215477632627`*^9, 3.869821560657995*^9}, 
+   3.869821677015801*^9, 3.8698220374245977`*^9, {3.869822165359033*^9, 
+   3.869822191291218*^9}, 3.869822227192721*^9, 3.869822293623604*^9, 
+   3.8698223380905867`*^9, 3.869822370405788*^9, 3.8698224192857943`*^9, 
+   3.86982252420497*^9, 3.869823987309305*^9},
+ CellLabel->
+  "During evaluation of \
+In[378]:=",ExpressionUUID->"509b1fb8-e92a-4791-8d8e-677f2ab3ad22"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SolutionValue", "[", "]"}], "//", "N"}]], "Input",
+ CellChangeTimes->{{3.867812636983653*^9, 3.867812640686309*^9}},
+ CellLabel->
+  "In[380]:=",ExpressionUUID->"51894c55-7640-4cdd-b2a8-b505311ee1b3"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"-", "0.4245273011435783`"}], "+", 
+   RowBox[{"0.39916865952237474`", " ", "\[ImaginaryI]"}]}], "}"}]], "Output",\
+
+ CellChangeTimes->{3.867812641009622*^9, 3.867812809543585*^9, 
+  3.867813411641612*^9, 3.867985229650284*^9, 3.869822429332844*^9, 
+  3.869822528187704*^9, 3.869823989006672*^9},
+ CellLabel->
+  "Out[380]=",ExpressionUUID->"808e7b8b-dd48-43ef-a1ed-746024db5f91"]
+}, Open  ]],
+
+Cell["\<\
+If we cross the branch-cut directly, the result might be different\
+\>", "Text",
+ CellChangeTimes->{{3.867813418471794*^9, 3.867813434521144*^9}, {
+  3.867985233222466*^9, 
+  3.867985257235571*^9}},ExpressionUUID->"5863bd25-a3d5-4500-b6e4-\
+fa1ed10d0f04"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SetSystemOfDifferentialEquation", "[", 
+  RowBox[{"Equation", ",", "BoundaryCondition", ",", "MasterIntegral", ",", 
+   RowBox[{"{", 
+    RowBox[{"x", "+", 
+     RowBox[{"I", " ", "\[Delta]"}]}], "}"}], ",", "PointBC"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"TransportVariable", "[", 
+  RowBox[{"x", ",", 
+   RowBox[{"2", "\[ImaginaryI]"}], ",", 
+   RowBox[{"CreateLine", "[", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", 
+      RowBox[{"2", "\[ImaginaryI]"}]}], "}"}], "]"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.867813445396064*^9, 3.8678134558145514`*^9}},
+ CellLabel->
+  "In[381]:=",ExpressionUUID->"9ce1f7ef-4cfe-49ed-816d-307e4b02eff8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" kinematics variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " kinematics variables ", {$CellContext`x}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990399288*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"5fce3d29-439b-48fa-96a7-f25cf67a4e47"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The Feynman prescriptions for the variables are \
+\"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"\[ImaginaryI]", " ", "\[Delta]"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The Feynman prescriptions for the variables are ", {
+   Complex[0, 1] $CellContext`\[Delta]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990401479*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"113ff5bd-5c32-4e28-a0dc-04bab3d47755"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" Master Integrals\"\>"}],
+  SequenceForm["SeaSyde: ", "There are ", 1, " Master Integrals"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990403574*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"0a4b23aa-4367-4d7c-8777-d844cbb071ea"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are imposed in \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"x", "\[Equal]", "0.`"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The boundary conditions are imposed in ", $CellContext`x == 
+   0.],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.86982399040519*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"4708250e-e3a7-48c1-9044-f720d9b46c53"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are given as precise \
+value of the solution.\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The boundary conditions are given as precise value of the solution."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990406764*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"a38c3e59-0b15-41f8-84a8-3b761fbc2a21"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\" equations and \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" boundary conditions\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " equations and ", 1, " boundary conditions"],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.86982399040839*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"166d2e6f-561f-4869-88b9-9dec852a3e67"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The possible singularities for the kinematics \
+variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}], "\[InvisibleSpace]", "\<\" are respectively \"\>",
+    "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "2.`"}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "-", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "+", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}]}], "}"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The possible singularities for the kinematics variables ", \
+{$CellContext`x}, " are respectively ", {{-2., 
+     Complex[2., -1.], 
+     Complex[2., 1.]}}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990410017*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"f9f75767-7965-4394-b40d-9a6be09d394b"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The system of differential equation has been set \
+and expanded in \[Epsilon]\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The system of differential equation has been set and expanded in \
+\[Epsilon]"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990411565*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"95855aec-aa3e-43df-bb97-15f932753d38"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"Moving following these points: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"2.`", " ", "\[ImaginaryI]"}]}]}], "}"}], 
+   "\[InvisibleSpace]", "\<\", avoiding singularities. Here you can see the \
+path in the complex plane for the kinematic variable \"\>", 
+   "\[InvisibleSpace]", "x"}],
+  SequenceForm["SeaSyde: ", "Moving following these points: ", {0., 
+    Complex[0., 2.]}, 
+   ", avoiding singularities. Here you can see the path in the complex plane \
+for the kinematic variable ", $CellContext`x],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990412981*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"d5fd847a-27c7-4fc5-85ff-74181addffc8"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[1, 0, 0], LineBox[{{-102., 0}, {-2., 0}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., -1.}, {2., -1.}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., 1.}, {2., 1.}}]}, 
+   {RGBColor[0, 0, 0], LineBox[{{0, 0}, {0, 2.}}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {-2., 0}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., -1.}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., 1.}]}},
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Re x\"", TraditionalForm], 
+    FormBox["\"Im x\"", TraditionalForm]},
+  PlotLabel->FormBox["\"Kinematic variable: x\"", TraditionalForm],
+  PlotRange->{{-0.5, 0.5}, {-0.5, 2.5}}]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990414804*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"fba1addf-dd66-4cb0-8437-86e6b2a2b06d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`", "\[InvisibleSpace]", "\<\" to \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"2.`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"2.`", " ", "\[ImaginaryI]"}]}], ")"}], " ", "tInt"}]}],
+  SequenceForm[
+  "SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 0., 
+   " to ", $CellContext`x, "=", 
+   Complex[0., 2.], ", along the line ", $CellContext`x, "=", 
+   Complex[0., 2.] $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990422306*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"d694f5b2-7326-4810-abd7-74711bdf827f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "0.`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{"1.`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[0., 1.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990539898*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"92f511d1-bea0-4800-a789-34548c251778"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", "0.`"}], 
+   "\[VeryThinSpace]", "+", 
+   RowBox[{"2.`", " ", "\[ImaginaryI]"}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[0., 2.]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990659042*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"256d7a71-7b61-4e84-adb5-1a42aefb2929"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"I arrived at \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"2.`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\". The error estimate is: \"\>", 
+    "\[InvisibleSpace]", "1.1808046569017017`*^-16", 
+    "\[InvisibleSpace]", "\<\".\\nUse Solution[] or SolutionValue[] to access \
+the solution, or CreteGraph to plot it.\"\>"}]}],
+  SequenceForm["SeaSyde: ", "I arrived at ", $CellContext`x, "=", 
+   Complex[0., 2.], ". The error estimate is: ", 1.1808046569017017`*^-16, 
+   ".\nUse Solution[] or SolutionValue[] to access the solution, or \
+CreteGraph to plot it."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867813456810611*^9, 3.867985259931754*^9, 
+  3.869822529832075*^9, 3.869823990774125*^9},
+ CellLabel->
+  "During evaluation of \
+In[381]:=",ExpressionUUID->"40e0f20b-5611-4493-ba81-d7b0a45009f8"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SolutionValue", "[", "]"}], "//", "N"}]], "Input",
+ CellLabel->
+  "In[383]:=",ExpressionUUID->"4910df6f-8ce1-4d7a-b040-eeca557a6ec5"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.665373019875289`", "\[VeryThinSpace]", "+", 
+   RowBox[{"0.5825921427607889`", " ", "\[ImaginaryI]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.8678126718164454`*^9, 3.867813461275364*^9, 
+  3.867985263554852*^9, 3.8698225325465937`*^9, 3.869823992168973*^9},
+ CellLabel->
+  "Out[383]=",ExpressionUUID->"26b4c068-79f5-4024-9aee-8ffa68300a35"]
+}, Open  ]],
+
+Cell["\<\
+We observe that the solution is different from the previous case. This is \
+because by crossing the cut directly, we end up on another Riemann sheet.\
+\>", "Text",
+ CellChangeTimes->{{3.867813467596826*^9, 
+  3.8678135316957703`*^9}},ExpressionUUID->"f82b251a-278f-42cd-9d33-\
+640ace2e93ea"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Examples of path", "Subsection",
+ CellChangeTimes->{{3.867813552847802*^9, 
+  3.8678135633441763`*^9}},ExpressionUUID->"8efe4be3-9223-4016-a909-\
+31bf2fda2fec"],
+
+Cell["\<\
+If we move on the real axes, it is important to give the right \
+\[Delta]-prescription, in order to decide wether to pass above or under the \
+singularity.\
+\>", "Text",
+ CellChangeTimes->{{3.867813568916794*^9, 3.867813632104822*^9}, {
+  3.8679852813288317`*^9, 
+  3.8679853387343616`*^9}},ExpressionUUID->"1c5d9ee5-ee6e-464b-9cc8-\
+262b18bf1ccb"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Configuration", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"EpsilonOrder", "\[Rule]", "0"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ExpansionOrder", "\[Rule]", "50"}]}], "\[IndentingNewLine]", 
+    "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"UpdateConfiguration", "[", "Configuration", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"SetSystemOfDifferentialEquation", "[", 
+  RowBox[{"Equation", ",", "BoundaryCondition", ",", "MasterIntegral", ",", 
+   RowBox[{"{", 
+    RowBox[{"x", "+", 
+     RowBox[{"I", " ", "\[Delta]"}]}], "}"}], ",", "PointBC"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"TransportVariable", "[", 
+  RowBox[{"x", ",", 
+   RowBox[{"-", "4"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Style", "[", 
+    RowBox[{
+     RowBox[{"\"\<The value of the solution is: \>\"", "<>", 
+      RowBox[{"ToString", "[", 
+       RowBox[{
+        RowBox[{"SolutionValue", "[", "]"}], "//", "N"}], "]"}]}], ",", 
+     "Red"}], "]"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.867813645640373*^9, 3.867813666311315*^9}, 
+   3.867820806406928*^9, 3.867821651001906*^9, 3.86782174441639*^9, 
+   3.867823923331767*^9, {3.867824110930098*^9, 3.86782412113468*^9}, {
+   3.867824201568536*^9, 3.867824234995634*^9}, {3.867824704987994*^9, 
+   3.867824706797781*^9}, {3.86798534242207*^9, 3.86798535353092*^9}, {
+   3.867985403645649*^9, 3.867985449467004*^9}},
+ CellLabel->
+  "In[384]:=",ExpressionUUID->"4e05fc62-17a6-42ad-9cb7-5b3d9b66a7ae"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"Updated \"\>", 
+   "\[InvisibleSpace]", "\<\"EpsilonOrder\"\>", 
+   "\[InvisibleSpace]", "\<\" parameter, new value -> \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm[
+  "SeaSyde: ", "Updated ", "EpsilonOrder", " parameter, new value -> ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.86982399469744*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"08e4d0cf-2d9c-4c8c-9bb7-795ce1434305"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"Updated \"\>", 
+   "\[InvisibleSpace]", "\<\"ExpansionOrder\"\>", 
+   "\[InvisibleSpace]", "\<\" parameter, new value -> \"\>", 
+   "\[InvisibleSpace]", "50"}],
+  SequenceForm[
+  "SeaSyde: ", "Updated ", "ExpansionOrder", " parameter, new value -> ", 50],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.8698239947017527`*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"4e67966f-eb2e-4be0-8a4d-2cad821294f5"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" kinematics variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " kinematics variables ", {$CellContext`x}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994704689*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"d22dbac5-cb53-41a9-91b1-3c50987a71c8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The Feynman prescriptions for the variables are \
+\"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"\[ImaginaryI]", " ", "\[Delta]"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The Feynman prescriptions for the variables are ", {
+   Complex[0, 1] $CellContext`\[Delta]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994706464*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"42b27d2c-a19f-4c19-b3fc-4551350b921d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" Master Integrals\"\>"}],
+  SequenceForm["SeaSyde: ", "There are ", 1, " Master Integrals"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.86982399470821*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"ea94f5dc-9719-422a-a559-e134d8247852"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are imposed in \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"x", "\[Equal]", "0.`"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The boundary conditions are imposed in ", $CellContext`x == 
+   0.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994709918*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"a5baa5c3-8a7c-4b34-b1d7-fbd301b7f30a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are given as precise \
+value of the solution.\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The boundary conditions are given as precise value of the solution."],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.86982399471161*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"35bb9216-70ce-42d2-be3f-6af8f6c1f7f1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\" equations and \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" boundary conditions\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " equations and ", 1, " boundary conditions"],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994713328*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"c3d1b853-12d3-44e9-8cba-af076e686992"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The possible singularities for the kinematics \
+variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}], "\[InvisibleSpace]", "\<\" are respectively \"\>",
+    "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "2.`"}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "-", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "+", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}]}], "}"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The possible singularities for the kinematics variables ", \
+{$CellContext`x}, " are respectively ", {{-2., 
+     Complex[2., -1.], 
+     Complex[2., 1.]}}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994714941*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"8bc48db6-f16d-4bd9-a640-09e990a4a900"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The system of differential equation has been set \
+and expanded in \[Epsilon]\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The system of differential equation has been set and expanded in \
+\[Epsilon]"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994716576*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"e918c67c-b35c-4dfb-aa0c-fb6617cbdf40"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"Moving following these points: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ",", 
+     RowBox[{
+      RowBox[{"-", "4.`"}], "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ",", 
+     RowBox[{"-", "4.`"}]}], "}"}], 
+   "\[InvisibleSpace]", "\<\", avoiding singularities. Here you can see the \
+path in the complex plane for the kinematic variable \"\>", 
+   "\[InvisibleSpace]", "x"}],
+  SequenceForm["SeaSyde: ", "Moving following these points: ", {0., 
+    Complex[0., 0.5], 
+    Complex[-4., 0.5], -4.}, 
+   ", avoiding singularities. Here you can see the path in the complex plane \
+for the kinematic variable ", $CellContext`x],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.8698239947180147`*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"3d4fde01-9200-49e8-9810-c84e394ade63"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[1, 0, 0], LineBox[{{-102., 0}, {-2., 0}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., -1.}, {2., -1.}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., 1.}, {2., 1.}}]}, 
+   {RGBColor[0, 0, 0], LineBox[{{0, 0}, {0, 0.5}, {-4., 0.5}, {-4., 0}}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {-2., 0}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., -1.}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., 1.}]}},
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Re x\"", TraditionalForm], 
+    FormBox["\"Im x\"", TraditionalForm]},
+  PlotLabel->FormBox["\"Kinematic variable: x\"", TraditionalForm],
+  PlotRange->{{-4.5, 0.5}, {-0.5, 1.}}]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.8698239947198687`*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"17d2b222-308b-44cc-934b-2390f3edba77"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`", "\[InvisibleSpace]", "\<\" to \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}], " ", "tInt"}]}],
+  SequenceForm[
+  "SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 0., 
+   " to ", $CellContext`x, "=", 
+   Complex[0., 0.5], ", along the line ", $CellContext`x, "=", 
+   Complex[0., 0.5] $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994727029*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"2b1b76b2-0ac2-47af-bf09-ea3ffc56bd6c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "+", 
+   RowBox[{
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\" to \"\>", "\[InvisibleSpace]", "x", 
+    "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{
+     RowBox[{"-", "4.`"}], "+", 
+     RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], 
+    "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}]}], "-", 
+   RowBox[{"4.`", " ", "tInt"}]}],
+  SequenceForm["SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 
+   Complex[0., 0.5], " to ", $CellContext`x, "=", 
+   Complex[-4., 0.5], ", along the line ", $CellContext`x, "=", 
+   Complex[0., 0.5] - 4. $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994842518*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"45ff7416-7ec9-4df3-9e43-d9226f80c96d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.0307764064044151`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-1.0307764064044151`, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823994960415*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"203a30a0-5ebb-497a-81af-8431402c2ef9"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.576073200449259`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-1.576073200449259, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823995079912*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"90ee54d7-9ec8-4a75-a543-a5bb33986d84"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.9038360458792032`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-1.9038360458792032`, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.86982399519879*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"78ee6b25-657a-4911-bea8-39708f7434d5"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "2.1584178137221435`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-2.1584178137221435`, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823995319613*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"780c5063-5d72-4a9e-a573-439f5e199374"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "2.420665885070868`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-2.420665885070868, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823995438534*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"89c5b5a2-9397-4feb-9b2a-502d39bb2e7c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "2.74737668488565`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-2.74737668488565, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823995557094*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"41c00cc4-b606-439e-aa0a-c1558814ce46"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "3.196979817968223`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-3.196979817968223, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823995676285*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"c4236c88-150b-486c-8e9b-dcb01f2fd1e1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "3.8455861478446822`"}], "+", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-3.8455861478446822`, 0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.8698239957951517`*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"9ff14f5c-61c8-4e12-9c6a-793c4a289ed5"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", 
+    RowBox[{
+     RowBox[{"-", "4.`"}], "+", 
+     RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], 
+    "\[InvisibleSpace]", "\<\" to \"\>", "\[InvisibleSpace]", "x", 
+    "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"-", "4.`"}], "\[InvisibleSpace]", "\<\", along the line \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "4.`"}], "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}]}], "-", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}], " ", "tInt"}]}],
+  SequenceForm["SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 
+   Complex[-4., 0.5], " to ", $CellContext`x, "=", -4., 
+   ", along the line ", $CellContext`x, "=", Complex[-4., 0.5] + 
+   Complex[0., -0.5] $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.8698239959146147`*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"f3638a23-1eb9-478d-ab1f-89c6a4163d50"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"I arrived at \"\>", 
+   "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"-", "4.`"}], 
+   "\[InvisibleSpace]", "\<\". The error estimate is: \"\>", 
+   "\[InvisibleSpace]", "1.277080877274768`*^-16", 
+   "\[InvisibleSpace]", "\<\".\\nUse Solution[] or SolutionValue[] to access \
+the solution, or CreteGraph to plot it.\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", "I arrived at ", $CellContext`x, "=", -4., 
+   ". The error estimate is: ", 1.277080877274768*^-16, 
+   ".\nUse Solution[] or SolutionValue[] to access the solution, or \
+CreteGraph to plot it."],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.8698239961347017`*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"d5defd06-bfff-4cd5-854b-7cb2cc7dd8dc"],
+
+Cell[BoxData[
+ StyleBox["\<\"The value of the solution is: {1.0654 + 3.40267 I}\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[1, 0, 0],
+  FrontFaceColor->RGBColor[1, 0, 0],
+  BackFaceColor->RGBColor[1, 0, 0],
+  GraphicsColor->RGBColor[1, 0, 0],
+  FontColor->RGBColor[1, 0, 0]]], "Print",
+ CellChangeTimes->{
+  3.867823008377383*^9, 3.867823923847732*^9, 3.8678240066633472`*^9, 
+   3.86782412188655*^9, 3.867824235652068*^9, 3.8678242813157797`*^9, 
+   3.867824319491626*^9, {3.867824356369514*^9, 3.867824366974448*^9}, 
+   3.867824707179894*^9, {3.8679853502594233`*^9, 3.867985353826194*^9}, {
+   3.867985404759222*^9, 3.867985450249851*^9}, 3.869822535490131*^9, 
+   3.869823996135831*^9},
+ CellLabel->
+  "During evaluation of \
+In[384]:=",ExpressionUUID->"3532a6b1-1c8e-4649-a34f-b0b1fcde1732"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Configuration", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"EpsilonOrder", "\[Rule]", "0"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ExpansionOrder", "\[Rule]", "50"}]}], "\[IndentingNewLine]", 
+    "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"UpdateConfiguration", "[", "Configuration", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"SetSystemOfDifferentialEquation", "[", 
+  RowBox[{"Equation", ",", "BoundaryCondition", ",", "MasterIntegral", ",", 
+   RowBox[{"{", 
+    RowBox[{"x", "-", 
+     RowBox[{"I", " ", "\[Delta]"}]}], "}"}], ",", "PointBC"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"TransportVariable", "[", 
+  RowBox[{"x", ",", 
+   RowBox[{"-", "4"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Style", "[", 
+    RowBox[{
+     RowBox[{"\"\<The value of the solution is: \>\"", "<>", 
+      RowBox[{"ToString", "[", 
+       RowBox[{
+        RowBox[{"SolutionValue", "[", "]"}], "//", "N"}], "]"}]}], ",", 
+     "Red"}], "]"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.867985378460264*^9, 3.86798539916562*^9}, {
+  3.867985461110285*^9, 3.867985463140476*^9}},
+ CellLabel->
+  "In[389]:=",ExpressionUUID->"5e285179-4af4-4e93-805a-a65a081dea6c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"Updated \"\>", 
+   "\[InvisibleSpace]", "\<\"EpsilonOrder\"\>", 
+   "\[InvisibleSpace]", "\<\" parameter, new value -> \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm[
+  "SeaSyde: ", "Updated ", "EpsilonOrder", " parameter, new value -> ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239973401318`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"b15b1edf-ec0d-46d6-ac6a-4f2378123459"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"Updated \"\>", 
+   "\[InvisibleSpace]", "\<\"ExpansionOrder\"\>", 
+   "\[InvisibleSpace]", "\<\" parameter, new value -> \"\>", 
+   "\[InvisibleSpace]", "50"}],
+  SequenceForm[
+  "SeaSyde: ", "Updated ", "ExpansionOrder", " parameter, new value -> ", 50],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239973422737`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"c92309bf-6382-41ed-8fb8-30c9a94932fc"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" kinematics variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " kinematics variables ", {$CellContext`x}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239973443413`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"d66b6f34-bbff-4fa8-95d2-c15d4ce9b50a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The Feynman prescriptions for the variables are \
+\"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "\[ImaginaryI]"}], " ", "\[Delta]"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The Feynman prescriptions for the variables are ", {
+   Complex[0, -1] $CellContext`\[Delta]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239973459587`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"f13e07cc-160e-4bdc-8ca6-4b905a592a9f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" Master Integrals\"\>"}],
+  SequenceForm["SeaSyde: ", "There are ", 1, " Master Integrals"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997347542*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"6e8e46d7-cd2e-45e4-b5d4-95f64eff0a1f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are imposed in \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"x", "\[Equal]", "0.`"}]}],
+  SequenceForm[
+  "SeaSyde: ", "The boundary conditions are imposed in ", $CellContext`x == 
+   0.],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997349118*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"27576288-12a6-49cc-aef5-08c25f0945ca"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The boundary conditions are given as precise \
+value of the solution.\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The boundary conditions are given as precise value of the solution."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997350658*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"e531ec42-41d5-4a97-afb7-f625cd7e6a54"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"There are \"\>", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\" equations and \"\>", 
+   "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" boundary conditions\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", "There are ", 1, " equations and ", 1, " boundary conditions"],
+  
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997352038*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"218a11f1-b5f2-4508-946f-145721aabec0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The possible singularities for the kinematics \
+variables \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "x", "}"}], "\[InvisibleSpace]", "\<\" are respectively \"\>",
+    "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "2.`"}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "-", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}], ",", 
+      RowBox[{"2.`", "\[VeryThinSpace]", "+", 
+       RowBox[{"1.`", " ", "\[ImaginaryI]"}]}]}], "}"}], "}"}]}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The possible singularities for the kinematics variables ", \
+{$CellContext`x}, " are respectively ", {{-2., 
+     Complex[2., -1.], 
+     Complex[2., 1.]}}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239973534737`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"740a664b-7e13-49d8-a8e9-c72966fc7e8d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The system of differential equation has been set \
+and expanded in \[Epsilon]\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", 
+   "The system of differential equation has been set and expanded in \
+\[Epsilon]"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997354998*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"f4ba25e1-f0f0-4139-af19-f3c55fc1c714"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"Moving following these points: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "-", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ",", 
+     RowBox[{
+      RowBox[{"-", "4.`"}], "-", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ",", 
+     RowBox[{"-", "4.`"}]}], "}"}], 
+   "\[InvisibleSpace]", "\<\", avoiding singularities. Here you can see the \
+path in the complex plane for the kinematic variable \"\>", 
+   "\[InvisibleSpace]", "x"}],
+  SequenceForm["SeaSyde: ", "Moving following these points: ", {0., 
+    Complex[0., -0.5], 
+    Complex[-4., -0.5], -4.}, 
+   ", avoiding singularities. Here you can see the path in the complex plane \
+for the kinematic variable ", $CellContext`x],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997356411*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"505bef3c-9357-40fe-bcd9-56cdb93ebe28"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[1, 0, 0], LineBox[{{-102., 0}, {-2., 0}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., -1.}, {2., -1.}}]}, 
+   {RGBColor[1, 0, 0], LineBox[{{-98., 1.}, {2., 1.}}]}, 
+   {RGBColor[0, 0, 0], LineBox[{{0, 0}, {0, -0.5}, {-4., -0.5}, {-4., 0}}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {-2., 0}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., -1.}]}, 
+   {RGBColor[255, 0, 0], InsetBox[
+     StyleBox["\<\"\[Cross]\"\>",
+      StripOnInput->False,
+      FontSize->15], {2., 1.}]}},
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Re x\"", TraditionalForm], 
+    FormBox["\"Im x\"", TraditionalForm]},
+  PlotLabel->FormBox["\"Kinematic variable: x\"", TraditionalForm],
+  PlotRange->{{-4.5, 0.5}, {-1., 0.5}}]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239973582287`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"3458ec37-a0f4-4388-9cee-c067c04da87e"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`", "\[InvisibleSpace]", "\<\" to \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "-", 
+   RowBox[{
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "-", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}], " ", "tInt"}]}],
+  SequenceForm[
+  "SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 0., 
+   " to ", $CellContext`x, "=", 
+   Complex[0., -0.5], ", along the line ", $CellContext`x, "=", 
+   Complex[0., -0.5] $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997365562*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"6c279cc7-43da-4c72-966a-0e98b4c46757"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "-", 
+   RowBox[{
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}], 
+    "\[InvisibleSpace]", "\<\" to \"\>", "\[InvisibleSpace]", "x", 
+    "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{
+     RowBox[{"-", "4.`"}], "-", 
+     RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], 
+    "\[InvisibleSpace]", "\<\", along the line \"\>", "\[InvisibleSpace]", 
+    "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "-", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}]}], "-", 
+   RowBox[{"4.`", " ", "tInt"}]}],
+  SequenceForm["SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 
+   Complex[0., -0.5], " to ", $CellContext`x, "=", 
+   Complex[-4., -0.5], ", along the line ", $CellContext`x, "=", 
+   Complex[0., -0.5] - 4. $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997483683*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"51e059bb-117d-4178-86d5-73b967c5ff0a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.0307764064044151`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-1.0307764064044151`, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997600759*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"3f565a8d-bf5e-4356-966d-01a715667929"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.576073200449259`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-1.576073200449259, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997719627*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"e33034f2-737b-4699-8fb7-46fb42226078"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "1.9038360458792032`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-1.9038360458792032`, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997840848*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"ca2eacd6-9f26-4c36-a663-80c40b3c72e1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "2.1584178137221435`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-2.1584178137221435`, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823997961054*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"08002a49-f71e-446a-b488-0fe566dcdc73"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "2.420665885070868`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-2.420665885070868, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239980823097`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"dde3dbce-d80b-41e0-a747-2ea8a249d3d2"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "2.74737668488565`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-2.74737668488565, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239982026854`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"84c982ff-379f-4183-a5f5-69b90172b1d1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "3.196979817968223`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-3.196979817968223, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823998322721*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"9ba4b33f-fea4-4e84-a14c-026b218386a2"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", 
+   "\[InvisibleSpace]", "\<\"The new point is: \"\>", "\[InvisibleSpace]", 
+   "x", "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "3.8455861478446822`"}], "-", 
+    RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}]}],
+  SequenceForm["SeaSyde: ", "The new point is: ", $CellContext`x, "=", 
+   Complex[-3.8455861478446822`, -0.5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823998441575*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"5672c5e7-5661-4d83-8cb3-469f90f9779c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\"SeaSyde: \"\>", 
+    "\[InvisibleSpace]", "\<\"Moving from the point \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", 
+    RowBox[{
+     RowBox[{"-", "4.`"}], "-", 
+     RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], 
+    "\[InvisibleSpace]", "\<\" to \"\>", "\[InvisibleSpace]", "x", 
+    "\[InvisibleSpace]", "\<\"=\"\>", "\[InvisibleSpace]", 
+    RowBox[{"-", "4.`"}], "\[InvisibleSpace]", "\<\", along the line \"\>", 
+    "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+    "\[InvisibleSpace]", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "4.`"}], "-", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}]}], "+", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+      RowBox[{"0.5`", " ", "\[ImaginaryI]"}]}], ")"}], " ", "tInt"}]}],
+  SequenceForm["SeaSyde: ", "Moving from the point ", $CellContext`x, "=", 
+   Complex[-4., -0.5], " to ", $CellContext`x, "=", -4., 
+   ", along the line ", $CellContext`x, "=", Complex[-4., -0.5] + 
+   Complex[0., 0.5] $CellContext`tInt],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823998561913*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"47bc05c2-2e3e-4dba-b67b-f589b0a680cd"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"SeaSyde: \"\>", "\[InvisibleSpace]", "\<\"I arrived at \"\>", 
+   "\[InvisibleSpace]", "x", "\[InvisibleSpace]", "\<\"=\"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"-", "4.`"}], 
+   "\[InvisibleSpace]", "\<\". The error estimate is: \"\>", 
+   "\[InvisibleSpace]", "1.277080877274768`*^-16", 
+   "\[InvisibleSpace]", "\<\".\\nUse Solution[] or SolutionValue[] to access \
+the solution, or CreteGraph to plot it.\"\>"}],
+  SequenceForm[
+  "SeaSyde: ", "I arrived at ", $CellContext`x, "=", -4., 
+   ". The error estimate is: ", 1.277080877274768*^-16, 
+   ".\nUse Solution[] or SolutionValue[] to access the solution, or \
+CreteGraph to plot it."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.8698239987776003`*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"d3e2d11f-833b-4192-94c3-40ae7f775051"],
+
+Cell[BoxData[
+ StyleBox["\<\"The value of the solution is: {1.0654 - 3.40267 I}\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[1, 0, 0],
+  FrontFaceColor->RGBColor[1, 0, 0],
+  BackFaceColor->RGBColor[1, 0, 0],
+  GraphicsColor->RGBColor[1, 0, 0],
+  FontColor->RGBColor[1, 0, 0]]], "Print",
+ CellChangeTimes->{3.867985463773343*^9, 3.8698225440706263`*^9, 
+  3.869823998778763*^9},
+ CellLabel->
+  "During evaluation of \
+In[389]:=",ExpressionUUID->"79a17990-8df6-4136-b6ac-a7326d2bb89e"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+And we can note that the imaginary part has an opposite sign.\
+\>", "Text",
+ CellChangeTimes->{{3.867985471501145*^9, 
+  3.867985487969203*^9}},ExpressionUUID->"3c7c5d6c-c96e-4d50-b376-\
+a72c2baed712"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{960, 761},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+TaggingRules->{"TryRealOnly" -> False},
+FrontEndVersion->"12.3 for Mac OS X ARM (64-bit) (September 30, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"e533129c-99e2-4121-9d19-b90d670f3539"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 204, 4, 30, "Input",ExpressionUUID->"53e6e267-f618-4d18-9e03-72db4e6d9ffc"],
+Cell[CellGroupData[{
+Cell[787, 28, 261, 4, 98, "Title",ExpressionUUID->"52004069-4a46-4cca-a2d1-3f70a1289cf9"],
+Cell[1051, 34, 447, 8, 58, "Text",ExpressionUUID->"c1bdd74f-4131-4d2f-afaf-57f3999f8633"],
+Cell[CellGroupData[{
+Cell[1523, 46, 256, 4, 54, "Subsection",ExpressionUUID->"76e50ed3-e741-40ca-8751-0f3f542adce4"],
+Cell[CellGroupData[{
+Cell[1804, 54, 805, 14, 52, "Input",ExpressionUUID->"93a87708-3bf3-4e9e-aaf1-c465af7665fe"],
+Cell[CellGroupData[{
+Cell[2634, 72, 335, 6, 44, "Print",ExpressionUUID->"93aceef9-37b5-4846-bcbb-3032fe46dae4"],
+Cell[2972, 80, 427, 8, 44, "Print",ExpressionUUID->"c35bea21-4bb0-41b8-b905-e7613d2d9f6c"],
+Cell[3402, 90, 1581, 26, 46, "Print",ExpressionUUID->"9ed5c696-53e5-4eab-b8fa-c277aff15fa6"],
+Cell[4986, 118, 715, 16, 26, "Print",ExpressionUUID->"db698c41-5059-4f5c-8396-a2cc15c85a95"]
+}, Open  ]]
+}, Open  ]],
+Cell[5728, 138, 1432, 38, 136, "Input",ExpressionUUID->"388b8097-299e-41dc-8c90-ee3b807195d7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7197, 181, 181, 3, 54, "Subsection",ExpressionUUID->"16ecb643-5c76-441c-bd0b-3189b4f306e5"],
+Cell[CellGroupData[{
+Cell[7403, 188, 2656, 43, 136, "Input",ExpressionUUID->"baccd777-f205-4522-902f-5d2fd59845d4"],
+Cell[CellGroupData[{
+Cell[10084, 235, 565, 13, 24, "Print",ExpressionUUID->"771aa904-abb7-4a4e-b77a-78de0396eb45"],
+Cell[10652, 250, 574, 14, 24, "Print",ExpressionUUID->"2f2e11b6-398b-42f3-aa75-db668ed6bf2a"],
+Cell[11229, 266, 566, 13, 24, "Print",ExpressionUUID->"bff9a006-2e12-45b8-b4ef-0c1b033a7897"],
+Cell[11798, 281, 599, 15, 24, "Print",ExpressionUUID->"652aa735-2100-4794-99fe-b857d21d4754"],
+Cell[12400, 298, 485, 11, 24, "Print",ExpressionUUID->"eea9b9d1-f78d-4432-951a-12d5f1921398"],
+Cell[12888, 311, 531, 14, 24, "Print",ExpressionUUID->"e57f5d40-9620-4228-9dfe-fe430e257bf6"],
+Cell[13422, 327, 506, 13, 24, "Print",ExpressionUUID->"804d1078-21c3-4c85-afa9-c7dfa01c6591"],
+Cell[13931, 342, 597, 14, 24, "Print",ExpressionUUID->"b206684d-7605-45d2-a4a5-8180764d07b4"],
+Cell[14531, 358, 1002, 26, 24, "Print",ExpressionUUID->"7761f6dc-e2b2-4010-a59a-bfacc9d1254a"],
+Cell[15536, 386, 522, 14, 24, "Print",ExpressionUUID->"2ab1f372-ae62-4bf6-8d6e-d7cdfb6d0b06"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16119, 407, 183, 3, 54, "Subsection",ExpressionUUID->"70fb17ec-b721-416b-9fd6-23e9aa6a6bad"],
+Cell[16305, 412, 242, 6, 35, "Text",ExpressionUUID->"187e87ed-754e-44da-849b-8281dd8a4168"],
+Cell[CellGroupData[{
+Cell[16572, 422, 212, 4, 30, "Input",ExpressionUUID->"6e6f6edb-f3d6-47ed-9034-5c2d01f0a609"],
+Cell[CellGroupData[{
+Cell[16809, 430, 459, 10, 24, "Print",ExpressionUUID->"569107bf-7074-4ff1-b41b-7eacbd99cf49"],
+Cell[17271, 442, 591, 13, 25, "Print",ExpressionUUID->"ac54f81a-1d74-4333-9702-67284d63858c"]
+}, Open  ]]
+}, Open  ]],
+Cell[17889, 459, 241, 6, 35, "Text",ExpressionUUID->"a487bd35-c1dc-43ac-a25b-30912b417c9b"],
+Cell[CellGroupData[{
+Cell[18155, 469, 800, 26, 48, "Input",ExpressionUUID->"f7da4c14-15c0-477c-b9c5-d65847396d62"],
+Cell[18958, 497, 441, 10, 34, "Output",ExpressionUUID->"447da09f-1365-4dd3-8a39-bd06cfb1ef9b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19436, 512, 359, 10, 31, "Input",ExpressionUUID->"1a39c160-20ff-4efd-97da-a11892c1c52d"],
+Cell[19798, 524, 448, 11, 37, "Output",ExpressionUUID->"b750f781-8ff4-491f-ab58-6baa4901cd63"]
+}, Open  ]],
+Cell[20261, 538, 451, 9, 58, "Text",ExpressionUUID->"758124ee-e9da-4e9b-ac95-1d9740ac096b"],
+Cell[CellGroupData[{
+Cell[20737, 551, 348, 9, 30, "Input",ExpressionUUID->"bddb63e0-0506-471a-b421-9686b5d3a19d"],
+Cell[21088, 562, 10580, 192, 244, "Output",ExpressionUUID->"7b6e8043-18d4-4b2c-8260-e9264ef27cdf"]
+}, Open  ]],
+Cell[31683, 757, 201, 3, 35, "Text",ExpressionUUID->"c5f5b09a-844d-4e88-b405-d8dd7a7a2c2c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31921, 765, 172, 3, 54, "Subsection",ExpressionUUID->"ab4bd9f9-9329-4204-9848-00a00ba07850"],
+Cell[32096, 770, 359, 7, 35, "Text",ExpressionUUID->"e00e7c1f-aa2e-4f5f-a1c7-abc6543792a3"],
+Cell[CellGroupData[{
+Cell[32480, 781, 383, 9, 30, "Input",ExpressionUUID->"b0b5d4d9-8adc-4bf6-a345-50a1171901b4"],
+Cell[CellGroupData[{
+Cell[32888, 794, 965, 22, 44, "Print",ExpressionUUID->"9026ab48-64df-4d24-bd3e-350ad7db5598"],
+Cell[33856, 818, 1124, 28, 283, "Print",ExpressionUUID->"022fc533-d0b0-41da-9476-587b8aa905d4"],
+Cell[34983, 848, 1213, 27, 24, "Print",ExpressionUUID->"ef45cd4d-23d4-407e-a970-fb9f7d2aeb69"],
+Cell[36199, 877, 725, 15, 24, "Print",ExpressionUUID->"c7395741-e6a9-4800-9861-09f008c384b6"],
+Cell[36927, 894, 1043, 21, 45, "Print",ExpressionUUID->"f558443a-c81b-4876-9925-59c30e0ab75d"]
+}, Open  ]]
+}, Open  ]],
+Cell[37997, 919, 257, 6, 35, "Text",ExpressionUUID->"b1e106eb-7278-4988-b7a6-4db48d77a5c0"],
+Cell[CellGroupData[{
+Cell[38279, 929, 234, 5, 30, "Input",ExpressionUUID->"0e1fe3b9-e23f-4e0f-ac4e-6a9d4e5ea23d"],
+Cell[38516, 936, 360, 7, 34, "Output",ExpressionUUID->"ff1b658a-cf77-4303-998c-4810dbb27216"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38925, 949, 169, 3, 54, "Subsection",ExpressionUUID->"522a301f-6b5e-4f73-94eb-9878e955f973"],
+Cell[39097, 954, 319, 7, 35, "Text",ExpressionUUID->"dc337902-5105-489d-a885-31a23bc22a6f"],
+Cell[CellGroupData[{
+Cell[39441, 965, 662, 14, 52, "Input",ExpressionUUID->"eb2f82be-4783-4937-9eda-7ad5a5f3c734"],
+Cell[CellGroupData[{
+Cell[40128, 983, 1049, 20, 24, "Print",ExpressionUUID->"353e4c45-3be8-4259-9ab4-e01135b45370"],
+Cell[41180, 1005, 1080, 22, 24, "Print",ExpressionUUID->"c3eff60d-9829-4275-9104-620c1b6c10be"],
+Cell[42263, 1029, 966, 18, 24, "Print",ExpressionUUID->"74783a84-493c-48a6-9d3a-dcb57b2c6f7f"],
+Cell[43232, 1049, 1012, 21, 24, "Print",ExpressionUUID->"59beb053-7b95-4aca-8cac-e57309476d04"],
+Cell[44247, 1072, 985, 20, 24, "Print",ExpressionUUID->"88d78881-e9cb-4b21-977d-cb754aefb9f1"],
+Cell[45235, 1094, 1080, 21, 24, "Print",ExpressionUUID->"cde42caf-48b3-49ea-b4d5-7c1bde8cdfb8"],
+Cell[46318, 1117, 1483, 33, 24, "Print",ExpressionUUID->"f0454192-01d3-40d4-9556-145abd1f92f1"],
+Cell[47804, 1152, 1005, 21, 24, "Print",ExpressionUUID->"d6ce4623-7188-4d10-9a00-404147f64bdd"],
+Cell[48812, 1175, 1537, 31, 44, "Print",ExpressionUUID->"04865f86-f116-4aa3-b29f-afc706af10a1"],
+Cell[50352, 1208, 1579, 35, 323, "Print",ExpressionUUID->"a4cdb9a5-78a2-46de-a7d5-ef7c28a6411c"],
+Cell[51934, 1245, 1421, 26, 24, "Print",ExpressionUUID->"69c39304-5f7c-4195-b5fe-b70745b71011"],
+Cell[53358, 1273, 997, 18, 24, "Print",ExpressionUUID->"07122f62-9236-41c8-90d2-562bf6a1a446"],
+Cell[54358, 1293, 1037, 20, 24, "Print",ExpressionUUID->"daa0180d-544c-4f6e-bf34-b911142a6a32"],
+Cell[55398, 1315, 1035, 20, 24, "Print",ExpressionUUID->"c869f2ca-8377-4455-86ca-fd0a19366575"],
+Cell[56436, 1337, 1716, 35, 24, "Print",ExpressionUUID->"c9654434-1f59-4e84-8c8a-e1eb570a03b6"],
+Cell[58155, 1374, 1134, 22, 24, "Print",ExpressionUUID->"c9a84bdd-eb69-4ebf-b077-bcd0d9f849bd"],
+Cell[59292, 1398, 1134, 22, 24, "Print",ExpressionUUID->"3c052bde-da64-471d-a901-506764a2d4d7"],
+Cell[60429, 1422, 1132, 22, 24, "Print",ExpressionUUID->"123634ad-2f85-479a-9b18-9090655de014"],
+Cell[61564, 1446, 1135, 22, 24, "Print",ExpressionUUID->"fdc7e9ce-94aa-4595-b7ca-3dae9543b7c5"],
+Cell[62702, 1470, 1137, 22, 24, "Print",ExpressionUUID->"4111a038-f3a2-4c4c-a271-a88d777862f8"],
+Cell[63842, 1494, 1789, 36, 24, "Print",ExpressionUUID->"48ce262e-6380-450a-a16a-852fc8ebc010"],
+Cell[65634, 1532, 1134, 22, 24, "Print",ExpressionUUID->"1693eed4-f363-4c80-92ad-9c5ef9358d04"],
+Cell[66771, 1556, 1131, 22, 24, "Print",ExpressionUUID->"43d6857f-5148-49b3-aa20-e3edc879668a"],
+Cell[67905, 1580, 1133, 22, 24, "Print",ExpressionUUID->"db0b2bd9-d94f-4476-b214-943f3dcc1fa0"],
+Cell[69041, 1604, 1136, 22, 24, "Print",ExpressionUUID->"8f57e1d4-befa-4f77-a262-27478f581497"],
+Cell[70180, 1628, 1491, 28, 45, "Print",ExpressionUUID->"509b1fb8-e92a-4791-8d8e-677f2ab3ad22"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[71720, 1662, 234, 5, 30, "Input",ExpressionUUID->"51894c55-7640-4cdd-b2a8-b505311ee1b3"],
+Cell[71957, 1669, 430, 10, 34, "Output",ExpressionUUID->"808e7b8b-dd48-43ef-a1ed-746024db5f91"]
+}, Open  ]],
+Cell[72402, 1682, 265, 6, 35, "Text",ExpressionUUID->"5863bd25-a3d5-4500-b6e4-fa1ed10d0f04"],
+Cell[CellGroupData[{
+Cell[72692, 1692, 675, 16, 52, "Input",ExpressionUUID->"9ce1f7ef-4cfe-49ed-816d-307e4b02eff8"],
+Cell[CellGroupData[{
+Cell[73392, 1712, 588, 13, 24, "Print",ExpressionUUID->"5fce3d29-439b-48fa-96a7-f25cf67a4e47"],
+Cell[73983, 1727, 621, 15, 24, "Print",ExpressionUUID->"113ff5bd-5c32-4e28-a0dc-04bab3d47755"],
+Cell[74607, 1744, 507, 11, 24, "Print",ExpressionUUID->"0a4b23aa-4367-4d7c-8777-d844cbb071ea"],
+Cell[75117, 1757, 552, 14, 24, "Print",ExpressionUUID->"4708250e-e3a7-48c1-9044-f720d9b46c53"],
+Cell[75672, 1773, 526, 13, 24, "Print",ExpressionUUID->"a38c3e59-0b15-41f8-84a8-3b761fbc2a21"],
+Cell[76201, 1788, 618, 14, 24, "Print",ExpressionUUID->"166d2e6f-561f-4869-88b9-9dec852a3e67"],
+Cell[76822, 1804, 1024, 26, 24, "Print",ExpressionUUID->"f9f75767-7965-4394-b40d-9a6be09d394b"],
+Cell[77849, 1832, 544, 14, 24, "Print",ExpressionUUID->"95855aec-aa3e-43df-bb97-15f932753d38"],
+Cell[78396, 1848, 938, 21, 44, "Print",ExpressionUUID->"d5fd847a-27c7-4fc5-85ff-74181addffc8"],
+Cell[79337, 1871, 1100, 28, 440, "Print",ExpressionUUID->"fba1addf-dd66-4cb0-8437-86e6b2a2b06d"],
+Cell[80440, 1901, 1194, 26, 24, "Print",ExpressionUUID->"d694f5b2-7326-4810-abd7-74711bdf827f"],
+Cell[81637, 1929, 641, 15, 24, "Print",ExpressionUUID->"92f511d1-bea0-4800-a789-34548c251778"],
+Cell[82281, 1946, 641, 15, 24, "Print",ExpressionUUID->"256d7a71-7b61-4e84-adb5-1a42aefb2929"],
+Cell[82925, 1963, 1037, 21, 45, "Print",ExpressionUUID->"40e0f20b-5611-4493-ba81-d7b0a45009f8"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84011, 1990, 168, 4, 30, "Input",ExpressionUUID->"4910df6f-8ce1-4d7a-b040-eeca557a6ec5"],
+Cell[84182, 1996, 384, 7, 34, "Output",ExpressionUUID->"26b4c068-79f5-4024-9aee-8ffa68300a35"]
+}, Open  ]],
+Cell[84581, 2006, 301, 6, 58, "Text",ExpressionUUID->"f82b251a-278f-42cd-9d33-640ace2e93ea"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84919, 2017, 166, 3, 54, "Subsection",ExpressionUUID->"8efe4be3-9223-4016-a909-31bf2fda2fec"],
+Cell[85088, 2022, 358, 8, 58, "Text",ExpressionUUID->"1c5d9ee5-ee6e-464b-9cc8-262b18bf1ccb"],
+Cell[CellGroupData[{
+Cell[85471, 2034, 1558, 35, 178, "Input",ExpressionUUID->"4e05fc62-17a6-42ad-9cb7-5b3d9b66a7ae"],
+Cell[CellGroupData[{
+Cell[87054, 2073, 881, 18, 24, "Print",ExpressionUUID->"08e4d0cf-2d9c-4c8c-9bb7-795ce1434305"],
+Cell[87938, 2093, 893, 19, 24, "Print",ExpressionUUID->"4e67966f-eb2e-4be0-8a4d-2cad821294f5"],
+Cell[88834, 2114, 883, 18, 24, "Print",ExpressionUUID->"d22dbac5-cb53-41a9-91b1-3c50987a71c8"],
+Cell[89720, 2134, 916, 20, 24, "Print",ExpressionUUID->"42b27d2c-a19f-4c19-b3fc-4551350b921d"],
+Cell[90639, 2156, 801, 16, 24, "Print",ExpressionUUID->"ea94f5dc-9719-422a-a559-e134d8247852"],
+Cell[91443, 2174, 848, 19, 24, "Print",ExpressionUUID->"a5baa5c3-8a7c-4b34-b1d7-fbd301b7f30a"],
+Cell[92294, 2195, 820, 18, 24, "Print",ExpressionUUID->"35bb9216-70ce-42d2-be3f-6af8f6c1f7f1"],
+Cell[93117, 2215, 914, 19, 24, "Print",ExpressionUUID->"c3d1b853-12d3-44e9-8cba-af076e686992"],
+Cell[94034, 2236, 1319, 31, 24, "Print",ExpressionUUID->"8bc48db6-f16d-4bd9-a640-09e990a4a900"],
+Cell[95356, 2269, 839, 19, 24, "Print",ExpressionUUID->"e918c67c-b35c-4dfb-aa0c-fb6617cbdf40"],
+Cell[96198, 2290, 1401, 31, 44, "Print",ExpressionUUID->"3d4fde01-9200-49e8-9810-c84e394ade63"],
+Cell[97602, 2323, 1419, 33, 141, "Print",ExpressionUUID->"17d2b222-308b-44cc-934b-2390f3edba77"],
+Cell[99024, 2358, 1493, 31, 24, "Print",ExpressionUUID->"2b1b76b2-0ac2-47af-bf09-ea3ffc56bd6c"],
+Cell[100520, 2391, 1623, 34, 24, "Print",ExpressionUUID->"45ff7416-7ec9-4df3-9e43-d9226f80c96d"],
+Cell[102146, 2427, 967, 20, 24, "Print",ExpressionUUID->"203a30a0-5ebb-497a-81af-8431402c2ef9"],
+Cell[103116, 2449, 964, 20, 24, "Print",ExpressionUUID->"90ee54d7-9ec8-4a75-a543-a5bb33986d84"],
+Cell[104083, 2471, 966, 20, 24, "Print",ExpressionUUID->"78ee6b25-657a-4911-bea8-39708f7434d5"],
+Cell[105052, 2493, 967, 20, 24, "Print",ExpressionUUID->"780c5063-5d72-4a9e-a573-439f5e199374"],
+Cell[106022, 2515, 964, 20, 24, "Print",ExpressionUUID->"89c5b5a2-9397-4feb-9b2a-502d39bb2e7c"],
+Cell[106989, 2537, 962, 20, 24, "Print",ExpressionUUID->"41c00cc4-b606-439e-aa0a-c1558814ce46"],
+Cell[107954, 2559, 964, 20, 24, "Print",ExpressionUUID->"c4236c88-150b-486c-8e9b-dcb01f2fd1e1"],
+Cell[108921, 2581, 969, 20, 24, "Print",ExpressionUUID->"9ff14f5c-61c8-4e12-9c6a-793c4a289ed5"],
+Cell[109893, 2603, 1679, 37, 24, "Print",ExpressionUUID->"f3638a23-1eb9-478d-ab1f-89c6a4163d50"],
+Cell[111575, 2642, 1239, 25, 45, "Print",ExpressionUUID->"d5defd06-bfff-4cd5-854b-7cb2cc7dd8dc"],
+Cell[112817, 2669, 804, 17, 24, "Print",ExpressionUUID->"3532a6b1-1c8e-4649-a34f-b0b1fcde1732"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[113670, 2692, 1272, 31, 178, "Input",ExpressionUUID->"5e285179-4af4-4e93-805a-a65a081dea6c"],
+Cell[CellGroupData[{
+Cell[114967, 2727, 569, 13, 24, "Print",ExpressionUUID->"b15b1edf-ec0d-46d6-ac6a-4f2378123459"],
+Cell[115539, 2742, 578, 14, 24, "Print",ExpressionUUID->"c92309bf-6382-41ed-8fb8-30c9a94932fc"],
+Cell[116120, 2758, 570, 13, 24, "Print",ExpressionUUID->"d66b6f34-bbff-4fa8-95d2-c15d4ce9b50a"],
+Cell[116693, 2773, 625, 16, 24, "Print",ExpressionUUID->"f13e07cc-160e-4bdc-8ca6-4b905a592a9f"],
+Cell[117321, 2791, 487, 11, 24, "Print",ExpressionUUID->"6e8e46d7-cd2e-45e4-b5d4-95f64eff0a1f"],
+Cell[117811, 2804, 533, 14, 24, "Print",ExpressionUUID->"27576288-12a6-49cc-aef5-08c25f0945ca"],
+Cell[118347, 2820, 506, 13, 24, "Print",ExpressionUUID->"e531ec42-41d5-4a97-afb7-f625cd7e6a54"],
+Cell[118856, 2835, 599, 14, 24, "Print",ExpressionUUID->"218a11f1-b5f2-4508-946f-145721aabec0"],
+Cell[119458, 2851, 1006, 26, 24, "Print",ExpressionUUID->"740a664b-7e13-49d8-a8e9-c72966fc7e8d"],
+Cell[120467, 2879, 524, 14, 24, "Print",ExpressionUUID->"f4ba25e1-f0f0-4139-af19-f3c55fc1c714"],
+Cell[120994, 2895, 1086, 26, 44, "Print",ExpressionUUID->"505bef3c-9357-40fe-bcd9-56cdb93ebe28"],
+Cell[122083, 2923, 1106, 28, 147, "Print",ExpressionUUID->"3458ec37-a0f4-4388-9cee-c067c04da87e"],
+Cell[123192, 2953, 1180, 26, 24, "Print",ExpressionUUID->"6c279cc7-43da-4c72-966a-0e98b4c46757"],
+Cell[124375, 2981, 1311, 29, 24, "Print",ExpressionUUID->"51e059bb-117d-4178-86d5-73b967c5ff0a"],
+Cell[125689, 3012, 653, 15, 24, "Print",ExpressionUUID->"3f565a8d-bf5e-4356-966d-01a715667929"],
+Cell[126345, 3029, 650, 15, 24, "Print",ExpressionUUID->"e33034f2-737b-4699-8fb7-46fb42226078"],
+Cell[126998, 3046, 653, 15, 24, "Print",ExpressionUUID->"ca2eacd6-9f26-4c36-a663-80c40b3c72e1"],
+Cell[127654, 3063, 653, 15, 24, "Print",ExpressionUUID->"08002a49-f71e-446a-b488-0fe566dcdc73"],
+Cell[128310, 3080, 652, 15, 24, "Print",ExpressionUUID->"dde3dbce-d80b-41e0-a747-2ea8a249d3d2"],
+Cell[128965, 3097, 650, 15, 24, "Print",ExpressionUUID->"84c982ff-379f-4183-a5f5-69b90172b1d1"],
+Cell[129618, 3114, 650, 15, 24, "Print",ExpressionUUID->"9ba4b33f-fea4-4e84-a14c-026b218386a2"],
+Cell[130271, 3131, 653, 15, 24, "Print",ExpressionUUID->"5672c5e7-5661-4d83-8cb3-469f90f9779c"],
+Cell[130927, 3148, 1363, 32, 24, "Print",ExpressionUUID->"47bc05c2-2e3e-4dba-b67b-f589b0a680cd"],
+Cell[132293, 3182, 924, 20, 45, "Print",ExpressionUUID->"d3e2d11f-833b-4192-94c3-40ae7f775051"],
+Cell[133220, 3204, 489, 12, 24, "Print",ExpressionUUID->"79a17990-8df6-4136-b6ac-a7326d2bb89e"]
+}, Open  ]]
+}, Open  ]],
+Cell[133736, 3220, 211, 5, 35, "Text",ExpressionUUID->"3c7c5d6c-c96e-4d50-b376-a72c2baed712"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
