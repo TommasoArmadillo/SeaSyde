@@ -23,3 +23,6 @@ To see all the availbale functions, use:
 
 ## Support 🆘🚧
 For any problem, comment or suggestion, please contact [Tommaso Armadillo](mailto:tommaso.armadillo@uclouvain.be) or open an issue here oh GitHub.
+
+## Acknowledgement 🙏🏻🐠
+We are grateful to [Mark Oliver Villanueva](https://instagram.com/artsbymv?igshid=OGQ5ZDc2ODk2ZA==) for designing the logo.
