@@ -1,4 +1,6 @@
-# SeaSyde 🏖🏝
+<img align="right" width="300" src="./logo.png">
+
+<div align="left" width=fit-content><h1> SeaSyde 🏖🏝 </h1></div>
 
 `SeaSyde` (**S**eries **E**xpansion **A**pproach for **SY**stem of **D**ifferential **E**quation) is a `Mathematica` package for solving the system of differential equation, associated to the Master Integrals of a given topology.
 
