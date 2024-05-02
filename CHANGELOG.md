@@ -1,11 +1,11 @@
 # Current stable version: 1.1.1 - 🏖🏝 Public Release
 
-## Version 1.1.1 - ❌🐞 Error estimate and bug correction
+## Version 1.1.1 - 2024/05/02 - ❌🐞 Error estimate and bug correction
 - Added an error estimate on the result. This is obtained by considering the difference between the complete solution and and solution without its last 3 terms, both evaluated at half the radius of convergence.
 - Corrected some bugs related to the loss of numerical precision while solving the system on top of singularities.
 - Corrected a bug in `DetermineAsymptoticBoundaryConditions`.
 
-## Version 1.1.0 - 👫📚 Coupled system
+## Version 1.1.0 - 2022/09/14 - 👫📚 Coupled system
 - `SeaSyde` can now solve system of coupled differential equations and it is not anymore limited to systems in upper-triangular form.
 - General optimization of the workflow.
 - Added a check for insufficient numerical precision. If so, the package automatically increases it.
