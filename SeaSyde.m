@@ -2,7 +2,7 @@
 
 (* ::Input::Initialization:: *)
 (* SeaSyde is a free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNUeral Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>. *)
 
-(* This software is maintained on https://github.com/TommasoArmadillo/SeaSyde *)
+(* This software is maintained on ______________ *)
 
 ClearSystemCache[];
 Unprotect@@Names["SeaSyde`*"];
@@ -22,7 +22,7 @@ ClearAll@@Names["SeaSyde`*"];
 ClearAll@@Names["SeaSyde`Private`*"];
 
 BeginPackage["SeaSyde`"];
-Print["+++++ SeaSyde` +++++\nVersion 1.1.0"];
+Print["+++++ SeaSyde` +++++\nVersion 1.1.1"];
 Print["SeaSyde is a package for solving the system of differential equation associated to the Master Integrals of a given topology."];
 Print["For any question or comment, please contact: \n",Hyperlink["T. Armadillo","mailto:tommaso.armadillo@uclouvain.be"],", ",Hyperlink["R. Bonciani","mailto:roberto.bonciani@roma1.infn.it"],", ",Hyperlink["S. Devoto","mailto:simone.devoto@unimi.it"],", ",Hyperlink["N. Rana","mailto:narayan.rana@unimi.it"]," or ",Hyperlink["A. Vicini","mailto:alessandro.vicini@mi.infn.it"],"."];
 Print["For the latest version please see the ",Hyperlink["GitHub repository","https://github.com/TommasoArmadillo/SeaSyde"],"."];
@@ -36,8 +36,8 @@ eps::usage="Alternative symbol for the dimensional regulator. It is converted in
 GetPoint::usage="GetPoint[]. Get the point at which the boundary conditions are imposed.";
 SolutionValue::usage="SolutionValue[]. Returns the value of the solution at the centre of the series expansion (i.e. GetPoint[]). Note that all the numbers are given with InternalWorkingPrecision digits. If it is unreadble consider using //N. To see only the nth MI use SolutionValue[][[n]].";
 SolutionTable::usage="SolutionValue[]. Returns the value of the solution at the centre of the series expansion (i.e. GetPoint[]) as a List. Note that all the numbers are given with InternalWorkingPrecision digits. If it is unreadble consider using //N. To see only the mth \[Epsilon]-coefficient of the nth MI use SolutionTable[][[n,m]].";
+SolutionTableExplicit::usage="SolutionTableExplicit[]. Returns the value of the solution at the centre of the series expansion (i.e. GetPoint[]) as a List {..., master[[i]] -> masterValue[[i]], ...}. Note that all the numbers are given with InternalWorkingPrecision digits. If it is unreadble consider using //N.";
 Solution::usage="Solution[]. Returns the full solution to the system of differential equations. Note that all the coefficient are given with InternalWorkingPrecision digits. If it is unreadble consider using //N. To see only the nth MI use Solution[][[n]].";
-SolutionExpanded::usage="SolutionExpanded[]. Get the full solution after applying a M\[ODoubleDot]bius transformation. Note that all the numbers are given with InternalWorkingPrecision digits. If it is unreadble consider using //N. To see only the nth MI use SolutionValue[][[n]].";
 SolveSystem::usage="SolveSystem[var_]. Solve the system of differential equations w.r.t. the variable var. The center of the series will be the point in which the BCs are imposed (i.e. GetPoint[]).";
 SetSystemOfDifferentialEquation::usage="SetSystemOfDifferentialEquation[SystemOfEqs_, BCs_, MIs_, Variables_, PointBC_, Param_:{}]. Sets all the internal variables of the package and prepare the system of differential equations. To see the format in which every argoument should be given please refer to the documentation of the package.";
 GetSystemOfDifferentialEquation::usage="GetSystemOfDifferentialEquation[]. Returns the system of differential equations togheter with the boundary conditions. If there are n MIs, the first n elements of the list are the equations w.r.t. the first kinematic variable, the second n equations are the ones w.r.t. to the second kinematic variable and so on. The last n elements are the BCs of the system.";
@@ -46,7 +46,6 @@ TransportBoundaryConditions::usage="TransportBoundaryConditions[PhaseSpacePoint_
 TransportVariable::usage="TransportVariable[Var_,Destination_,Line_:{}]. Transport the BCs for the variable Var from the starting point (i.e. GetPoint[]) to Destination. Note that the Destination point can be an arbitrary complex number. If the Line parameter is given, it will follow that line. Otherwise an internal algortihm will determine the best path to avoid singularities and branch-cuts. The line object can be created through the function CreateLine.";
 CreateLine::usage="CreateLine[Points_List]. Returns an object line which connects all the points in Points through segments. Points must be a list of arbitrary complex points, the first one must be the one in which the BCs are imposed (i.e. GetPoint[]), the last one must be the Destination point.";
 CreateGraph::usage="CreateGraph[MiNum_,EpsOrder_,left_,right_,OtherFunctions_:{}]. Plot the O(\!\(\*SuperscriptBox[\(\[Epsilon]\), \(EpsOrder\)]\)) for the MiNum-th Master Integral from left to right. Other functions can be passed in the OtherFunctions argoument in order to be plotted in the same graph.";
-PerformMobiusTransformation::usage="PerformMobiusTransformation[Var_]. Perform a M\[ODoubleDot]bius tranformation of the solution w.r.t. the variable Var. A M\[ODoubleDot]bius transformation extend the interval of convergence of a serie from (\!\(\*SubscriptBox[\(x\), \(0\)]\)-r,\!\(\*SubscriptBox[\(x\), \(0\)]\)+r) to (\!\(\*SubscriptBox[\(x\), \(L\)]\),\!\(\*SubscriptBox[\(x\), \(R\)]\)), where \!\(\*SubscriptBox[\(x\), \(L\)]\)and \!\(\*SubscriptBox[\(x\), \(R\)]\) are the nearest singular points, by mapping the interval (\!\(\*SubscriptBox[\(x\), \(L\)]\),\!\(\*SubscriptBox[\(x\), \(R\)]\)) into (-1,1). Note that 0 must be inside (\!\(\*SubscriptBox[\(x\), \(L\)]\),\!\(\*SubscriptBox[\(x\), \(R\)]\)).";
 CheckSingularities::usage="CheckSingularities[]. Check if the singularities have a logarithmic behaviour, i.e. if they are associated to a branch-cut. It may be very time consuming.";
 (* End Documentation *)
 
@@ -56,6 +55,7 @@ Begin["`Private`"];
 Off[Reduce::ratnz];
 Off[NSolve::ratnz];
 Off[Solve::ratnz];
+Off[Solve::svars];
 Off[General::stop];
 Off[General::munfl];
 Off[NRoots`Isolate::maxit];
@@ -113,6 +113,7 @@ RadiusOfConvergencePrivate:=PackageConfiguration["RadiusOfConvergence"];
 LogarithmicSingularities:=PackageConfiguration["LogarithmicSingularities"];
 SafeSingularities:=PackageConfiguration["SafeSingularities"];
 WarningFlagPrivate:=PackageConfiguration["Warning"];
+MaxLogOrder=0;
 
 (* Print informations and errors *)
 PrintInfo[args__]:=Print["SeaSyde: ",args];
@@ -156,12 +157,17 @@ PrintInfo["There are ",VariablesEq//Length," kinematics variables ",VariablesEq]
 DeltaPrescription=Table[If[Arg[Coefficient[Variable[[i]],Global`\[Delta]]]>=0,1,-1],{i,1,Length[Variable]}];
 PrintInfo["The Feynman prescriptions for the variables are ",Table[If[DeltaPrescription[[i]]==1,+I Global`\[Delta], -I Global`\[Delta]],{i,1,Length[DeltaPrescription]}]];
 
-KinematicParameters=Parameters//SetPrec;
+KinematicParameters=Parameters//Rationalize//SetPrec;
+CurrentBC= (PointBC/.KinematicParameters)//ChopDigits//Rationalize//SetPrec;
 Equations=(((#/.{Equal->Subtract})==0&)/@Equations)/.KinematicParameters//ChopDigits;
+
+(* Check that there are no extra masters *)
+CheckMasters[Equations,Unknown,VariablesEq];
+
 Equations=IncreasePrecision[Equations,Unknown,VariablesEq];
 BoundaryConditions=(((#/.{Equal->Subtract})==0&)/@BoundaryConditions)/.KinematicParameters//ChopDigits;
-BoundaryConditions=IncreasePrecision[BoundaryConditions,Unknown,VariablesEq,PointBC];
 
+BoundaryConditions=ExpandAndIncreasePrecision[BoundaryConditions,Unknown,VariablesEq,CurrentBC];
 (* Note that if the MI do explicitly depend on \[Epsilon] we remove it *)
 Do[Substitutions=Join[{
 GetName[Unknown[[i]]][var___,VariablesEq[[-1]],\[Epsilon]]->GetName[Unknown[[i]]][var,VariablesEq[[-1]]],
@@ -177,7 +183,7 @@ MasterIntegralsPrototype=Unknown;
 MasterIntegrals=Unknown;
 NumberMasterIntegrals=Length[MasterIntegrals];
 PrintInfo["There are ",NumberMasterIntegrals, " Master Integrals"];
-CurrentBC= (PointBC/.KinematicParameters)//ChopDigits//SetPrec;
+
 PrintInfo["The boundary conditions are imposed in ",(LogicalExpand[VariablesEq==CurrentBC]/.And->List)//N];
 DetermineAsymptoticBC[BoundaryConditions,VariablesEq];
 If[AsymptoticBoundaryConditions, 
@@ -186,12 +192,13 @@ PrintInfo["The boundary conditions are given as asymptotic limit. Note that the 
 PrintInfo["The boundary conditions are given as precise value of the solution."];
 ];
 SystemOfDifferentialEquation=Join[Equations,BoundaryConditions];
-(*SystemOfDifferentialEquation=SystemOfDifferentialEquation/.Equal[elem_,0]:>Equal[Expand[elem],0];*)
 PrintInfo["There are ",Length[Equations], " equations and ", Length[BoundaryConditions], " boundary conditions"];
 Singularities=FindSingularities[Equations,VariablesEq]/.KinematicParameters//ChopDigits;
 PrintInfo["The possible singularities for the kinematics variables ",VariablesEq," are respectively ",Singularities//N];
-MinEpsExponent=FindMinEpsilonExponent[BoundaryConditions];
+
+MinEpsExponent=FindMinEpsilonExponentBC[BoundaryConditions];
 EpsilonExpandDiffEq[];
+
 PrintInfo["The system of differential equation has been set and expanded in \[Epsilon]"];
 multipleLists=Table[{},{i,1,Length[VariablesEq]}];
 If[(MatchQ[SafeSingularities,{}]||MatchQ[SafeSingularities,multipleLists])||(MatchQ[LogarithmicSingularities,{}]||MatchQ[LogarithmicSingularities,multipleLists]),
@@ -203,39 +210,53 @@ If[MatchQ[SafeSingularities,{}],PackageConfiguration["SafeSingularities"]=multip
 If[MatchQ[LogarithmicSingularities,{}],PackageConfiguration["LogarithmicSingularities"]=multipleLists;];
 ];
 
-IncreasePrecision[expression_,masters_,variables_,boundCond_:{}]:=Module[{kinSub={},sub={},invSub={},subD={},invSubD={},temporaryExpr},
-sub=Table[GetName[masters[[i]]]->ToExpression["f"<>ToString[i]],{i,1,Length[masters]}];
+CheckMasters[equations_,masters_,variables_]:=Module[{masterList,extraMasters},
+masterList=DeleteCases[Cases[equations,f_[Apply[Sequence,variables]]/;(f=!=Times&&f=!=Plus),Infinity],Derivative[__][_][Apply[Sequence,variables]]]//DeleteDuplicates;
+If[!ContainsAll[masters,masterList],
+extraMasters=Complement[masterList,masters];
+PrintError["The set of equations contains the following masters that do not appear in the master list parameter: ",extraMasters];
+];
+];
+
+IncreasePrecision[expression_,masters_,variables_,boundCond_:{}]:=Module[{kinSub={},subst={},invSub={},subD={},invSubD={},temporaryExpr},
+subst=Table[GetName[masters[[i]]]->ToExpression["f"<>ToString[i]],{i,1,Length[masters]}];
 invSub=Table[ToExpression["f"<>ToString[i]]->GetName[masters[[i]]],{i,1,Length[masters]}];
-temporaryExpr=expression/.sub;
+temporaryExpr=expression//.subst;
 temporaryExpr=SetPrec[Num[temporaryExpr]];
-Return[temporaryExpr/.invSub];
+Return[temporaryExpr//.invSub];
+];
+
+ExpandAndIncreasePrecision[expression_,masters_,variables_,boundCond_:{}]:=Module[{kinSub={},subst={},invSub={},subD={},invSubD={},temporaryExpr},
+subst=Table[GetName[masters[[i]]]->ToExpression["f"<>ToString[i]],{i,1,Length[masters]}];
+invSub=Table[ToExpression["f"<>ToString[i]]->GetName[masters[[i]]],{i,1,Length[masters]}];
+temporaryExpr=Normal[Series[expression//.subst,{eps,0,EpsilonOrderPrivate}]];
+temporaryExpr=SetPrec[Num[temporaryExpr]];
+Return[temporaryExpr//.invSub];
 ];
 
 EpsilonExpandDiffEq[]:=
-Module[{expansionSubstitutionFunctions,expansionSubstitutionDerivatives,system,systemExpanded, orderEps=EpsilonOrderPrivate,terms,exponent,i,j},
+Module[{expansionSubstitutionFunctions,expansionSubstitutionDerivatives,system,systemExpanded, orderEps=EpsilonOrderPrivate,terms,exponent},
 MasterIntegralsPrototype=MasterIntegralsFunctions;
 expansionSubstitutionFunctions=Table[GetName[MasterIntegralsFunctions[[i]]][var__]->Sum[\!\(\*OverscriptBox[\((GetName[MasterIntegralsFunctions[\([\)\(i\)\(]\)]])\), \((j)\)]\)[var]eps^j,{j,MinEpsExponent,orderEps}],{i,1,Length[MasterIntegralsFunctions]}];
  expansionSubstitutionDerivatives=Table[Derivative[d__][GetName[MasterIntegralsFunctions[[i]]]][var__]->Sum[Derivative[d][\!\(\*OverscriptBox[\((GetName[MasterIntegralsFunctions[\([\)\(i\)\(]\)]])\), \((j)\)]\)][var]eps^j,{j,MinEpsExponent,orderEps}],{i,1,Length[MasterIntegralsFunctions]}];
 system=SystemOfDifferentialEquation/.Equal[elem_,0]->Normal[Series[elem,{eps,0,orderEps+1}]];
 system=system/.Join[expansionSubstitutionFunctions,expansionSubstitutionDerivatives];
 systemExpanded=Table[Table[0,Length[system]],orderEps+Abs[MinEpsExponent]+1];
+
 Do[
 (* For better handling, the first index refers to # eq while the second one get the LeftHandSide *)
 terms=Series[system[[i]]//ChopDigits,{eps,0,orderEps}]//Normal//Expand;
-
 Do[
 exponent=Exponent[terms[[j]],eps];
 If[exponent>EpsilonOrderPrivate,Continue[];];
+If[exponent+Abs[MinEpsExponent]+1===0,Print[terms[[j]]//N];Abort[];];
 systemExpanded[[exponent+Abs[MinEpsExponent]+1,i]] +=Coefficient[terms[[j]],eps,exponent];
-,{j,1,Length[terms]}];
-,{i,1,Length[system]}];
-
-(* Correct some weird behaviour of Series *)
+,{j,Length[terms]}];
+,{i,Length[system]}];
 systemExpanded=((systemExpanded//Collect[#,{fun_[x]}]&)/.{Times[Co_,fun_[x]]:>Times[Together[ExpandAll[Co]],fun[x]]});
-SystemEpsilonExpanded=Map[Function[x,Equal[x,0]],systemExpanded,{2}];
+SystemEpsilonExpanded=Map[Function[x,Equal[x,0]],systemExpanded,{2}]//ChopDigits;
 MasterIntegralsPrototype=Table[Table[\!\(\*OverscriptBox[\(GetName[MasterIntegralsFunctions[\([\)\(j\)\(]\)]]\), \(i\)]\)[(VariablesEq/.{List->Sequence})],{j,1,Length[MasterIntegralsFunctions]}],{i,MinEpsExponent,orderEps}];
 ];
-
 
 UpdateSystemEpsilonExpanded[]:=Module[{expansionSubstitutionFunctions,newBoundaryConditions},	
 SystemEpsilonExpanded=Drop[#1,-NumberMasterIntegrals]& /@SystemEpsilonExpanded;	
@@ -250,7 +271,6 @@ AppendTo[SystemEpsilonExpanded[[i+Abs[MinEpsExponent]+1]], Coefficient[newBounda
 ,{i,MinEpsExponent,EpsilonOrderPrivate}];
 ];
 
-
 GetSystemOfDifferentialEquation[]:=Module[{},
 SystemOfDifferentialEquation
 ];
@@ -263,10 +283,11 @@ SystemEpsilonExpanded
 Num:=N[#,InternalWorkingPrecisionPrivate]&;
 NumAlmost:=N[#,100]&;    (* Usefull in some boundary conditions *)
 ChopDigits:=Chop[#,10^-ChopPrecisionPrivate]&;
-ChopLine:=Chop[#,10^-50]&;
+ChopExtraDigits:=Chop[#,10^(-ChopPrecisionPrivate-50)]&;
+ChopLine:=Chop[#,10^(-ChopPrecisionPrivate/2)]&;
 SetPrec:=ChopDigits[SetPrecision[#,InternalWorkingPrecisionPrivate]]&;
-SetSuperPrec:=ChopDigits[SetPrecision[#,InternalWorkingPrecisionPrivate+200]]&;
-SetAccur:=SetAccuracy[#,InternalWorkingPrecisionPrivate]&;
+SetUltraPrec:=ChopDigits[N[Rationalize[#,10^(-InternalWorkingPrecisionPrivate-200)],InternalWorkingPrecisionPrivate+200]]&;
+SetPrecNumber:=(#/.{num_Real:>SetUltraPrec[num],num_Complex:>SetUltraPrec[num]})&;
 MyAsymptotic:=If[$VersionNumber>=12.1,Asymptotic,MyAsymptoticInternal];
 MyLimit=If[$VersionNumber>=12.1,QuickLimit,Limit];
 
@@ -306,11 +327,18 @@ PrintInfo["File ", Path, " has been correctly read."];
 Content
 ];
 
-FindMinEpsilonExponent[Boundary_]:=Module[{MinExp=0},
+FindMinEpsilonExponentEQ[Equations_]:=Module[{MinExpEQ=0},
 Do[
-MinExp=Min[Exponent[Boundary[[i,1]],eps,Min],MinExp];
-,{i,1,Length[Boundary]}];
-MinExp
+MinExpEQ=Min[Cases[Equations//Expand,_*\[Epsilon]^b_ MasterIntegralsFunctions[[mi]]->b,Infinity]//Min,MinExpEQ];
+,{mi,1,Length[Equations]}];
+Return[MinExpEQ];
+];
+
+FindMinEpsilonExponentBC[Boundary_]:=Module[{MinExpBC=0},
+Do[
+MinExpBC=Min[Exponent[Boundary[[mi,1]],eps,Min],MinExpBC];
+,{mi,1,Length[Boundary]}];
+Return[MinExpBC];
 ];
 
 FindSingularities[SystemEquations_,Variables_]:=Module[{Singularities,AllEquations,DenominatorEquation,SingularPoints},
@@ -330,18 +358,24 @@ FullForm]\)->0;
 Do[
 	AllEquations=Collect[AllEquations,MasterIntegralsFunctions[[i]]];
 ,{i,1,Length[MasterIntegralsFunctions]}];
-	
 Do[
 AllEquations[[i,0]]=List;
 ,{i,1,Length[AllEquations]}];
+
 AllEquations=AllEquations//Rationalize//Together//Denominator//Flatten//DeleteDuplicates//ChopDigits;
+AllEquations=AllEquations/.eps->0;
+Do[
+If[Head[AllEquations[[i]]]===Times,AllEquations[[i]]=Apply[List,AllEquations[[i]]];];
+,{i,Length[AllEquations]}];
+AllEquations=AllEquations//Flatten//DeleteDuplicates;
+
 Do[
 	Do[
-		SingularPoints=Solve[AllEquations[[j]]==0,Variables[[i]],Complexes];
-		Singularities[[i]]=Join[Singularities[[i]],SingularPoints/.{List[Rule[_,val_]]->val}];
-	,{j,1,Length[AllEquations]}];
-Singularities[[i]]=Singularities[[i]]//Rationalize//Simplify//DeleteDuplicates//Num//DeleteDuplicates[#,(Abs[#1-#2]<1*^-15&)]&;
-,{i,1,Length[Variables]}];
+SingularPoints=Solve[AllEquations[[j]]==0,Variables[[i]],Complexes];	
+Singularities[[i]]=Join[Singularities[[i]],SingularPoints/.{List[Rule[_,val_]]->val}];
+	,{j,Length[AllEquations]}];
+Singularities[[i]]=Singularities[[i]]//Flatten//Rationalize//Simplify//DeleteDuplicates//Num//DeleteDuplicates[#,(Abs[#1-#2]<1*^-15&)]&;
+,{i,Length[Variables]}];
 Singularities
 ];
 
@@ -375,14 +409,14 @@ SolveSeriesExpansionSafe[line_,variable_,CalledFromNotebook_Symbol:True,AlreadyC
 SolveSeriesExpansion[line,variable,CalledFromNotebook];
 ,
 If[AlreadyCalled, PrintError["The increase in the precision was not sufficient. Try to increase it manually."];];
-(*IncreaseInternalWorkingPrecision[];*)
+IncreaseInternalWorkingPrecision[];
 PrintWarning["The InternalWorkingPrecision was too low. It has been increased to ",InternalWorkingPrecisionPrivate];
 SolveSeriesExpansionSafe[line//SetPrec,variable,CalledFromNotebook,True];
 ,
 RowReduce::luc
 ],RowReduce::luc];
 
-SolveSeriesExpansion[line_,variable_,CalledFromNotebook_Symbol:True]:=Module[{EpsOrder=MinEpsExponent,Sol,Equation,EquationTmp,BoundCond,var,AlreadySolved={},tmp,numMI=Length[MasterIntegralsFunctions],lineParam=tInt,index=1,OtherVarBC={},correctionOrder},
+SolveSeriesExpansion[line_,variable_,CalledFromNotebook_Symbol:True]:=Module[{EpsOrder=MinEpsExponent,Sol,Equation,EquationTmp,BoundCond,var,AlreadySolved={},tmp,numMI=Length[MasterIntegralsFunctions],lineParam=tInt,index=1,OtherVarBC={},correctionOrder,singul},
 
 If[!MemberQ[VariablesEq,variable],PrintError["The variable ",variable," is not a valid variable!"]];
 
@@ -429,8 +463,8 @@ Equation=SafeSubstitute[EquationTmp,OtherVarBC];
 BoundCond=BoundCond/.OtherVarBC;
 var=MasterIntegralsPrototype[[nEps]]/.OtherVarBC;
 Sol=SolveEquation[Equation,BoundCond,var,variable,EpsOrder,line, lineParam,CurrentExpansionPoint,AlreadySolved]//Num//ChopDigits;
-AlreadySolved=Join[AlreadySolved,Table[var[[i]]->Sol[[i]],{i,1,Length[var]}]];
 
+AlreadySolved=Join[AlreadySolved,Table[var[[i]]->Sol[[i]],{i,1,Length[var]}]];
 EpsOrder++;
 SeaSyde`Private`Debug`EpsOrder++;
 ,{nEps,1,Length[SystemEpsilonExpanded]}];
@@ -439,8 +473,12 @@ MasterIntegrals=MasterIntegrals/.OtherVarBC;
 MasterIntegrals=MasterIntegrals/.AlreadySolved;
 MasterIntegrals=AnalyticContinuation[MasterIntegrals,variable,line,CurrentExpansionPoint];
 (* Correction due to the order *)
-If[correctionOrder<0,PackageConfiguration["ExpansionOrder"]+=correctionOrder;ClearSeries[MasterIntegrals,variable];];
-If[CalledFromNotebook,Print["I solved the system of equation. The error estimate is: ",EstimateError[variable],"."];];
+If[correctionOrder<0,PackageConfiguration["ExpansionOrder"]+=correctionOrder;ClearSeries[MasterIntegrals,variable,ExpansionOrderPrivate];];
+If[CalledFromNotebook,
+Do[
+If[MatchQ[VariablesEq[[ind]],variable],singul=Singularities[[ind]]/.GetPoint[];Break[];];
+,{ind,Length[VariablesEq]}];
+Print["I solved the system of equation. The error estimate is: ",EstimateError[variable],". The radius of convergence is: ",ExpectedConvergenceRadius[line/.lineParam->CurrentExpansionPoint,singul,variable]//N];];
 ];
 
 SafeSubstitute[expression_,replacement_]:=Module[{finalExpr,coefficientDer},
@@ -453,49 +491,56 @@ finalExpr[[iExpr]]=(finalExpr[[iExpr]]+coefficientDer==0);
 Return[finalExpr];
 ];
 
-SolveEquation[EquationExt_, BoundaryConditions_,  Unknown_,KinVariable_,EpsOrder_,line_,lineParam_,PointExpansion_,AlreadySolved_:{}]:=Module[{Eq,newUnknown,newDerivatives,newFunctions,BC,newBC,solution={},oldVar,coeffDerivative,substitution={},numberSolved,dependencies,dependenciesNumber,numberOfEqs,eqTmp,bcTmp,funTmp,MIalreadySolved={},index,sub={lineParam->Variable`tmpVar},antiSub={Variable`tmpVar->lineParam},tmpExp=PointExpansion,derivatives={}},
-Eq=(EquationExt/.AlreadySolved);
+SolveEquation[EquationExt_, BoundaryConditions_,  Unknown_,KinVariable_,EpsOrder_,line_,lineParam_,PointExpansion_,AlreadySolved_:{}]:=Module[{Eq=EquationExt,newUnknown,newDerivatives,newFunctions,BC,newBC,solution={},oldVar,coeffDerivative,substitution={},numberSolved,dependencies,dependenciesNumber,numberOfEqs,eqTmp,bcTmp,funTmp,MIalreadySolved={},index,sub={lineParam->Variable`tmpVar},antiSub={Variable`tmpVar->lineParam},tmpExp=PointExpansion,equationSolved},
+
+(* Substitute already solved equations *)
+Eq=EquationExt/.AlreadySolved;
+
 (* Substitute functions *)
 newUnknown=Table[Unknown[[i]]->Subscript[f, i][lineParam],{i,1,Length[Unknown]}];
 newFunctions=Table[Subscript[f, i][lineParam],{i,1,Length[Unknown]}];
+
 newDerivatives=Table[MyDerivative[Unknown,KinVariable,line,lineParam,i,f],{i,1,Length[Unknown]}];
+
 Eq=Eq/.Join[newUnknown,newDerivatives];
+
 (* Substitute line *)
-Eq=Eq/.{KinVariable->line}/.Power[base_,exponent_]:>Power[Simplify[base],exponent]//Num//ChopDigits;
+Eq=Eq/.Power[basePH_,exponentPH_]/;exponentPH>0:>Power[Simplify[basePH],exponentPH]//Num//ChopDigits;
+Eq=Eq/.KinVariable->line;
+
 (* Substitute BC *)
 newBC=(Table[GetName[Unknown[[i]]][__]->Subscript[f, i][lineParam],{i,1,Length[Unknown]}]/.Join[{KinVariable-> (line/.{lineParam-> PointExpansion})},{lineParam->PointExpansion}]);
 BC=Solve[(BoundaryConditions)/.newBC,Table[newBC[[i,2]],{i,1,Length[BoundaryConditions]}],WorkingPrecision->InternalWorkingPrecisionPrivate][[1]]/.{Rule-> Equal};
 BC=Sort[BC,#1[[1,0,2]]<#2[[1,0,2]]&];
 BC=BC/.{KinVariable->line};
+
 (* Make sure the coefficient of derivatives is 1 *)
+coeffDerivative=1/D[line,lineParam];
 Do[
-coeffDerivative=Coefficient[Eq[[i,1]],Subscript[f, i]'[lineParam]]//Rationalize[#,10^-InternalWorkingPrecisionPrivate]&//Simplify//Num;
 Eq[[i]]=MultiplySides[Eq[[i]],1/coeffDerivative];
+Eq[[i,1]]=(Eq[[i,1]]/.Subscript[f, i]'[lineParam]->0)+Subscript[f, i]'[lineParam];
 ,{i,1,Length[Eq]}];
-(* Solve *)
 
 Do[If[MatchQ[VariablesEq[[i]],KinVariable],index=i;];,{i,1,Length[VariablesEq]}];
 If[!CloseToSing[line/.lineParam->PointExpansion,Singularities[[index]]/.GetPoint[]],
-Do[AppendTo[derivatives,Cases[Eq[[i]],Subscript[f, m_]'[tInt],Infinity]//DeleteDuplicates];,{i,1,Length[Eq]}];
-derivatives=Flatten[derivatives];
-If[Length[derivatives]=!=Length[Eq],PrintError["One equation does not contain a derivative!"]];
-Eq=Eq/.Equal->Subtract;
-Eq=Normal[Series[SetSuperPrec[Eq]/.{Subscript[f, m_][lineParam]->Subscript[f, m],Subscript[f, m_]'[lineParam]->0},{lineParam,PointExpansion,ExpansionOrderPrivate}]]/.{Subscript[f, m_]->Subscript[f, m][lineParam]}//SetPrec;
-Do[Eq[[i]]=Equal[Eq[[i]]+derivatives[[i]],0],{i,1,Length[Eq]}];
-
+Eq=Normal[Series[Eq/.{Subscript[f, m_][lineParam]->Subscript[f, m],Subscript[f, m_]'[lineParam]->Subscript[f, m]'},{lineParam,PointExpansion,ExpansionOrderPrivate}]]/.{Subscript[f, m_]->Subscript[f, m][lineParam],Subscript[f, m_]'->Subscript[f, m]'[lineParam]}//SetPrec;
 ];
+
 (* SOLVE THE SYSTEM *)
 numberSolved=0;
-
 While[numberSolved<NumberMasterIntegrals,
 dependencies=DependsOnSystem[Eq];
 dependenciesNumber=Length/@dependencies;
 numberOfEqs=Min[dependenciesNumber];
+equationSolved={};
 Do[
 If[dependenciesNumber[[count1]]=!=numberOfEqs||ContainsAny[MIalreadySolved,dependencies[[count1]]],Continue[];];
 SeaSyde`Private`Debug`MInumber=dependencies[[count1]];
+
 eqTmp={};bcTmp={};
+
 funTmp=newFunctions[[dependencies[[count1]]]]//ToListAlways;
+AppendTo[equationSolved,dependencies[[count1]]];
 Do[
 If[dependencies[[count1]]==dependencies[[count2]],
 AppendTo[eqTmp,Eq[[count2]]//ChopDigits];
@@ -504,29 +549,26 @@ AppendTo[bcTmp,BC[[count2]]//ChopDigits];
 ,{count2,count1,Length[Eq]}];
 solution=SolveEquationBySeriesExpansion[eqTmp,bcTmp,funTmp,lineParam,PointExpansion,line,KinVariable];
 substitution=Join[substitution,Table[Subscript[f, dependencies[[count1,index]]][lineParam]->solution[[index]],{index,1,numberOfEqs}]];
-
 AppendTo[MIalreadySolved,dependencies[[count1]]];
 MIalreadySolved=Flatten[MIalreadySolved];
 numberSolved+=numberOfEqs;
 ,{count1,1,Length[Eq]}];
-Eq=Delete[Eq,Position[dependenciesNumber,numberOfEqs]]/.substitution;
-BC=Delete[BC,Position[dependenciesNumber,numberOfEqs]];
+
+Eq=Delete[Eq,Position[dependencies,Alternatives@@equationSolved]]/.substitution;
+BC=Delete[BC,Position[dependencies,Alternatives@@equationSolved]];
 ];
+
 solution=Table[Subscript[f, h][lineParam],{h,NumberMasterIntegrals}]/.substitution;
 (* Get back to original variables *)
 oldVar=Solve[KinVariable== line,lineParam][[1]]//Expand;
 solution/.oldVar
 ];
 
-DependsOnEquation[equationExt_]:=Module[{dependsOn={}},
-Do[
-If[FindVar[equationExt,Subscript[f, num]],AppendTo[dependsOn,num]];
-,{num,1,NumberMasterIntegrals}];
-dependsOn
-];
+DependsOnEquation[equationExt_]:=Sort[DeleteDuplicates[Cases[Variables[equationExt/.Equal->Plus],(Subscript[f, num_][tInt]|Subscript[f, num_]'[tInt])->num]]];
+
 DependsOnSystem[system_]:=DependsOnEquation/@system;
 
-DetermineR[Equations_,var_,varNumber_]:=Module[{polynomial,minExp,solOrd,RValues={},indicial={},coefficient,polynomialTot},
+DetermineR[Equations_,var_,varNumber_]:=Module[{polynomial,minExp,solOrd,RValues={},indicial={},coefficient,polynomialTot,RValuesInt,RValuesHalf},
 polynomialTot=Equations/.{Power[var,r]->1,Power[var,r+a_]->Power[l,a]}/.var->l;
 Do[
 polynomial=polynomialTot[[i,1]]//Expand//ChopDigits;
@@ -534,20 +576,29 @@ minExp=Exponent[polynomial,l,Min]//Chop;
 coefficient=CoefficientList[Coefficient[polynomial,l,minExp],Log[l]]/.l->0;
 indicial=Join[indicial,Map[Equal[#,0]&,coefficient]];
 ,{i,1,varNumber}];
+
 solOrd=Solve[indicial,WorkingPrecision->10];
 solOrd=DeleteCases[solOrd,Except[{___,r->_,___}]];
-solOrd=solOrd/.{___,r->a_,___}->r->Round[a,1/2];
-If[solOrd==={},PrintError["I was not able to find a valid value for r (Frobenius method)"];];
-RValues=Sort[solOrd,#1[[2]]<#2[[2]]&]//First;
-Return[RValues];
+solOrd=solOrd/.{xx___,r->a_,yy___}->(r->Round[a,1/2]);
+RValues=Sort[solOrd,#1[[2]]<#2[[2]]&];
+
+RValuesInt=Cases[RValues,Rule[r,xx_]/;Mod[2xx,2]===1]//CleanList;
+RValuesHalf=Cases[RValues,Rule[r,xx_]/;Mod[2xx,2]===0]//CleanList;
+
+If[RValuesInt==={}&&RValuesHalf=!={},Return[RValuesHalf];];
+If[RValuesInt=!={}&&RValuesHalf==={},Return[RValuesInt];];
+Return[Join[RValuesInt,RValuesHalf]];
 ];
 
-(* Example: Subscript[r, 1]>0 \[Rule] 1/1000*)
+CleanList[list_List]:=Module[{},
+If[list==={}||Length[list]===1,Return[list];];
+Return[{list[[1]]}];
+];
+
 InequalityToNumber[sol_]:=Module[{\[Delta]=1*^-3,b=sol[[2]]},
 If[MatchQ[sol, SubMinus[r]<_], Return[b+\[Delta]],Return[b-\[Delta]]];
 ];
 
-(* Example {{Subscript[r, 1]\[Rule]0,Subscript[c, 1,0]\[Rule]1/4}} \[Rule] 0 *)
 EqualityToNumber[sol_]:=Module[{solutions=sol[[1]],val},
 Do[
 If[MatchQ[solutions[[i,1]],Subscript[r, _]], val=solutions[[i,2]];];
@@ -559,13 +610,16 @@ SolveFrobeniusSystem[SystemOfEquations_,Functions_,LineParam_,PointExpansion_]:=
 completeSolution=Table[Table[0,{j,1,Length[Functions]}],{i,1,Length[Functions]}];
 Do[
 solution=SolveFrobenius[SystemOfEquations,Functions,LineParam,PointExpansion,counter-1];
-param=solution/._*c[elem__]->c[elem]/.Plus->List//Flatten//DeleteDuplicates;
+param=solution/._*c[elem__]->c[elem]/.Plus->List//Flatten//DeleteDuplicates//DeleteCases[#,0]&;
 solution=solution/.Table[param[[i]]->C[i],{i,1,Length[param]}];
 numberOfParam=Length[param];
 If[param==={},PrintError["Something went wrong while trying to solve the homogeneous equations."];];
+
 Which[numberOfParam===Length[Functions],Break[];,
-param==={}||numberOfParam>Length[Functions],PrintError["Something went wrong while trying to solve the homogeneous equations for MIs: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>"."];];
-,{counter,1,Length[Functions]}];
+param==={}||numberOfParam>Length[Functions],
+PrintError["Something went wrong while trying to solve the homogeneous equations for MIs: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>"."];];
+,{counter,Length[Functions]}];
+If[numberOfParam=!=Length[Functions],PrintError["Something went wrong while trying to solve the homogeneous equations for MIs: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>"."];];
 Do[
 Do[
 completeSolution[[j,i]]=solution[[j]]/.Table[C[k]->KroneckerDelta[k,i],{k,1,Length[param]}];
@@ -576,39 +630,44 @@ Return[completeSolution];
 
 CreateSeries[x_,x0_,i_,j_,n_]:=Sum[c[i,j,l](x-x0)^l,{l,0,n}];
 
-SolveFrobenius[EquationExtF_,FunctionsF_,LineParamF_,PointExpansionF_,logTerms_]:=Module[{Equation = Num[EquationExtF],Solution,RRules,min,max,sol,coeff,order,index=1,CompleteSol,returnValue,otherSol,length=Length[FunctionsF]},
+SolveFrobenius[EquationExtF_,FunctionsF_,LineParamF_,PointExpansionF_,logTerms_]:=Module[{Equation = Num[EquationExtF],EquationSub,Solution,RRules,min,max,sol,coeff,order,index=1,CompleteSol,returnValue,otherSol,length=Length[FunctionsF],SolutionComplete,cnt=0,systemsEquations},
 (* Expand in z=lineParam-pointExp *)
+
 Equation=Equation/.{Subscript[f, m_][_]->Subscript[f, m],Subscript[f, m_]'[_]->Subscript[f, m]'};
-Equation=Equation/.{LineParamF-> z+PointExpansionF}//ChopDigits//Expand;     
-Equation=Normal[Series[Equation,{z,0,ExpansionOrderPrivate+5}]]//SetPrec;   
+Equation=Equation/.{LineParamF-> z+PointExpansionF}//Expand;     
+
+Equation=Normal[Series[Equation,{z,0,ExpansionOrderPrivate+5}]];   
+
 Equation=Equation/.{Subscript[f, m_]->Subscript[f, m][z],Subscript[f, m_]'->Subscript[f, m]'[z]};
-Solution=Table[((#-PointExpansionF)^r Sum[
-Sum[CreateSeries[#,PointExpansionF,i,count-j,ExpansionOrderPrivate+5] Log[#-PointExpansionF]^j/j!,{j,0,count}]
-,{count,0,logTerms}]&)[LineParamF],{i,FunctionsF/.Subscript[f, k_][_]->k}];
+SolutionComplete=Table[0,{i,length}];
 Equation=Equation/.{Subscript[f, i_]->((#)^r Sum[
 Sum[CreateSeries[#,0,i,count-j,ExpansionOrderPrivate+5] Log[#]^j/j!,{j,0,count}]
 ,{count,0,logTerms}]&)};
 Equation=ClearSeries[Equation//Expand,z,ExpansionOrderPrivate+5]//ChopDigits;
 RRules= DetermineR[Equation,z, length];
+Do[
+cnt++;
+Solution=Table[((#-PointExpansionF)^r Sum[
+Sum[CreateSeries[#,PointExpansionF,i,count-j,ExpansionOrderPrivate+5] Log[#-PointExpansionF]^j/j!,{j,0,count}]
+,{count,0,logTerms}]&)[LineParamF],{i,FunctionsF/.Subscript[f, k_][_]->k}];
 (* substitute R values in Solution and Equation *)
-Solution=Solution/.RRules;
-Equation = (Equation /.RRules)//ChopDigits;
+Solution=Solution/.rRule;
+EquationSub = (Equation /.rRule)//ChopDigits;
 (* Solve order by order *)
-
 (* Note that we substitute Subscript[c, _,0]\[Rule]1 because the solution will depend by it and temporarily eliminating it we can speed up computation *)
 max=ExpansionOrderPrivate;
-Equation=Equation/.{Equal->Subtract}//ChopDigits;
-If[Im[RRules[[2]]]=!=0,Equation=Equation/z^RRules[[2]]//Expand;];
-min=Min[Exponent[Equation,z,Min]];
-
+EquationSub=EquationSub/.{Equal->Subtract}//ChopDigits;
+If[Im[rRule[[2]]]=!=0,EquationSub=EquationSub/z^rRule[[2]]//Expand;];
+min=Min[Exponent[EquationSub,z,Min]];
 order=min;
 CompleteSol={};
-(*max*)
 While[order<=  max,
-coeff=Coefficient[Equation,z,order];
+coeff=Coefficient[EquationSub,z,order];
 coeff=(coeff//.CompleteSol)//ChopDigits;
 coeff=CoefficientList[coeff,Log[z]]//Flatten;
-sol=Solve[Table[coeff[[i]]==0,{i,1,Length[coeff]}],WorkingPrecision->InternalWorkingPrecisionPrivate]//ChopDigits;
+coeff=Expand[coeff]/.{num_Real:>SetUltraPrec[num],num_Complex:>SetUltraPrec[num]}//ChopDigits;
+systemsEquations=Table[Simplify[coeff[[i]]]==0,{i,1,Length[coeff]}];
+sol=MySolve[systemsEquations];
 
 If[sol=!={}&&Length[sol]>0,
 CompleteSol=Join[CompleteSol,sol[[1]]];
@@ -616,35 +675,62 @@ CompleteSol=Join[CompleteSol,sol[[1]]];
 order++;
 index++;
 ];
-returnValue=((Solution//.CompleteSol)/.c[_,_,i_]/;i>= max->0);
-returnValue=Collect[returnValue,{c[__],Log[__]}]//ChopDigits;
+SolutionComplete+=((Solution//.CompleteSol)/.c[_,_,i_]/;i>= (max-r/.rRule)->0/.c[xx__]->c[xx,cnt]);
+,{rRule,RRules}];
+returnValue=Collect[SolutionComplete,{c[__],Log[__]}]//ChopDigits//SetPrec;
 Return[returnValue];
 ];
 
-SolveEquationBySeriesExpansion[EquationExt_,BoundaryConditionExt_,Functions_,LineParam_,PointExpansion_,LineParametrization_,KinVariab_]:=Module[{BoundaryCondition,BCs,Homogeneus,HomogeneusSolution,ParticoularSolution,Inhomogenues,CompleteSolution,InverseHomogeneusSeries,InhomogenuesSeries,Integrand,IntegratedSeries,DefiniteIntegratedSeries,points,BCPoint,CompleteAnalytic},
+SolveEquationBySeriesExpansion[EquationExt_,BoundaryConditionExt_,Functions_,LineParam_,PointExpansion_,LineParametrization_,KinVariab_]:=Module[{BoundaryCondition,BCs,Homogeneus,HomogeneusSolution,HomogeneusSolutionTmp,ParticoularSolution,Inhomogenues,CompleteSolution,InverseHomogeneusSeries,InhomogenuesSeries,Integrand,IntegratedSeries,DefiniteIntegratedSeries,points,BCPoint,CompleteAnalytic,InverseHomogeneusSolution,sub,indexKin},
 (* CHECK FOR sInt != 0 *)
 BoundaryCondition=BoundaryConditionExt/.{LineParam->sInt+PointExpansion}/.{Log[coeff_*sInt]->Log[coeff]+Log[sInt]}//Expand;
 BoundaryCondition=Table[BoundaryCondition[[i,2]],{i,1,Length[BoundaryCondition]}];
 Homogeneus=MakeHomogeneus[EquationExt,Functions]//SetPrec;
 Inhomogenues=InomogeusPart[EquationExt]//SetPrec;
+Inhomogenues=(Inhomogenues/.{LineParam->sInt+PointExpansion});
+sub=DeleteDuplicates[Cases[Inhomogenues,Log[a_]|Power[a_,_]->a,Infinity]];
+sub=Table[{Log[elem]->ChopDigits[Log[Expand[elem]]],Power[elem,exp_]->Power[ChopDigits[Expand[elem]],exp]},{elem,sub}]//Flatten;
+Inhomogenues=Inhomogenues/.sub;
+Inhomogenues=Inhomogenues/.{Log[x_]:>Log[Expand[x]]}/.{Power[x_,exp_]:>Power[Expand[x],exp]}//Num//SetPrec;
+Inhomogenues=Inhomogenues/.{Log[coeff_*sInt]:>Log[coeff]+Log[sInt]}//Num//SetPrec;
+HomogeneusSolution=SolveFrobeniusSystem[Homogeneus,Functions,LineParam,PointExpansion]//Num//SetPrec;
+BCPoint=CurrentBCLineParam-PointExpansion//ChopDigits//SetPrec;
+HomogeneusSolution=(HomogeneusSolution/.{LineParam->sInt+PointExpansion})//ChopDigits//SetPrec;
+HomogeneusSolutionTmp=Series[SetUltraPrec[HomogeneusSolution],{sInt,0,ExpansionOrderPrivate+5}];
 
-Inhomogenues=(((Inhomogenues/.{LineParam->sInt+PointExpansion})/.{Log[x_]:>Log[Expand[x]]})/.{Power[x_,exp_]:>Power[Expand[x],exp]})//Num//ChopDigits//SetPrec;
-HomogeneusSolution=SolveFrobeniusSystem[Homogeneus,Functions,LineParam,PointExpansion]//Num;
-BCPoint=CurrentBCLineParam-PointExpansion//ChopDigits;
-HomogeneusSolution=(HomogeneusSolution/.{LineParam->sInt+PointExpansion})//ChopDigits;
-InverseHomogeneusSeries=Normal[Series[ClearSeries[ExpandAll[Inverse[HomogeneusSolution]],sInt,ExpansionOrderPrivate+5],{sInt,0,ExpansionOrderPrivate+5}]];
-InhomogenuesSeries=Table[FastSeries[Inhomogenues[[i]],sInt,0,ExpansionOrderPrivate+3],{i,1,Length[Inhomogenues]}]//SetPrec//Num;
+(* If we are onto a singular point we use a safer implementation, otherwise we use a quicker one *)
+Do[If[MatchQ[VariablesEq[[i]],KinVariab],indexKin=i;];,{i,1,Length[VariablesEq]}];
+If[!CloseToSing[LineParametrization/.LineParam->PointExpansion,Singularities[[indexKin]]/.GetPoint[]],
+InverseHomogeneusSolution=MyInverse[HomogeneusSolutionTmp];
+,
+InverseHomogeneusSolution=Inverse[HomogeneusSolutionTmp];
+];
+InverseHomogeneusSeries=
+Normal[Series[ClearSeries[ExpandAll[Normal[InverseHomogeneusSolution]],sInt,ExpansionOrderPrivate+5],{sInt,0,ExpansionOrderPrivate+5}]]//SetPrec;
 
+Inhomogenues=Inhomogenues//Expand//ChopDigits;
+InhomogenuesSeries=Table[
+Collect[Inhomogenues[[i]],{Log[__],Log[__]^_},Normal[Series[#,{SeaSyde`Private`sInt,0,ExpansionOrderPrivate+3}]]&]
+,{i,Length[Inhomogenues]}];
+InhomogenuesSeries=InhomogenuesSeries//SetPrec//Num;
 Integrand=ClearSeries[InverseHomogeneusSeries . InhomogenuesSeries//ExpandAll,sInt,ExpansionOrderPrivate+5];
 IntegratedSeries= Collect[MyIntegrate[Integrand],Log[__]]//Num//ChopDigits;
 ParticoularSolution=Collect[ClearSeries[HomogeneusSolution . IntegratedSeries//ExpandAll//ChopDigits,sInt,ExpansionOrderPrivate],Log[__]];
 CompleteSolution=HomogeneusSolution . Table[C[i],{i,1,Length[Functions]}]+ParticoularSolution;
 CompleteAnalytic=AnalyticContinuation[CompleteSolution,KinVariab,LineParametrization,PointExpansion];
-(* determine BC *)
 BCs=DetermineBoundaryConditions[CompleteAnalytic,BoundaryCondition,BCPoint];
-(CompleteSolution//ChopDigits//Expand//ClearSeries[#,sInt]&)/.Join[BCs,{sInt->LineParam-PointExpansion}]//ChopDigits
+(CompleteSolution//ChopDigits//Expand//ClearSeries[#,sInt,ExpansionOrderPrivate]&)/.Join[BCs,{sInt->LineParam-PointExpansion}]//ChopDigits
 ];
 
+MyInverse[matrix_]:=Module[{invertedMatrix,dimension,placeHolderMatrix,element,substitution,determinant,inverseDet},
+dimension=Dimensions[matrix];
+placeHolderMatrix=Table[element[index1,index2],{index1,dimension[[1]]},{index2,dimension[[2]]}];
+substitution=Table[element[index1,index2]->matrix[[index1,index2]],{index1,dimension[[1]]},{index2,dimension[[2]]}]//Flatten;
+determinant=Det[placeHolderMatrix]/.substitution;
+inverseDet=Series[1/Normal[determinant]//Simplify//ChopExtraDigits,{sInt,0,ExpansionOrderPrivate+5}]//ChopDigits;
+invertedMatrix=Det[placeHolderMatrix]Inverse[placeHolderMatrix]/.substitution//ChopDigits;
+Return[inverseDet*invertedMatrix//ChopDigits];
+];
 
 (* Expanding *)
 FastSeries[expr_,var_,center_,order_]:=Module[{list,coeff,add,sub,res,subExpToZero,subExpToOne,avoidDoubleCounting,extraOrder},
@@ -678,7 +764,7 @@ Return[res];
 SetAttributes[{MyIntegrateAux},Listable];
 IntReplacement={};
 MyIntegrate[inputExt__]:=Module[{input=inputExt,LogOrd},
-input=(inputExt/.Log[coeff_ *sInt]->Log[coeff]+Log[sInt])//ChopDigits;
+input=(inputExt/.Log[coeff_ *sInt]->Log[coeff]+Log[sInt])//Expand//ChopDigits;
 LogOrd=Append[GetCases[{input},Log[sInt]^(k_:1)|Log[sInt]^(k_:1):>k],1]//Max;
 If[LogOrd>MaxLogOrder,
 UpdateIntReps[LogOrd];
@@ -688,7 +774,7 @@ MyIntegrateAux[input]
 MyIntegrateAux[a_]:=MyIntegrateAux[a,sInt];
 MyIntegrateAux[exp0_/;NumericQ[exp0],var_]:=var exp0;
 MyIntegrateAux[exp0_,var_]:=Module[{exp=(Expand@exp0),Out,Const},
-exp=exp/.Log[coeff_ *sInt]/;Abs[coeff-1]<=1*^-10->Log[sInt];
+exp=exp/.Log[coeff_ *sInt]/;Abs[coeff-1]<=1*^-15->Log[sInt];
 Out=exp/.var->b/.IntReplacement;
 Const=(Out/.a->0);
 Out-Const+b Const/.a->1/.b->var
@@ -714,7 +800,7 @@ GetCases[expr_,case_]:=expr//Cases[{#},case,Infinity]&//DeleteDuplicates//Sort;
 Solution[]:=MasterIntegrals;
 SolutionValue[]:=(MasterIntegrals/.Table[VariablesEq[[i]]->CurrentBC[[i]],{i,1,Length[VariablesEq]}])//SetPrec;
 SolutionTable[]:=Table[Table[Coefficient[SolutionValue[][[i]],eps,j],{j,MinEpsExponent,EpsilonOrderPrivate}],{i,1,NumberMasterIntegrals}];
-SolutionExpanded[]:=MasterIntegralsMobius;
+SolutionTableExplicit[]:=Table[MasterIntegralsFunctions[[j]]->(MasterIntegrals[[j]]/.Table[VariablesEq[[i]]->CurrentBC[[i]],{i,1,Length[VariablesEq]}]//SetPrec),{j,NumberMasterIntegrals}];
 
 EstimateError[var_]:=Module[{radius,bc,sing,solutionTable,newErr,solTruncated,maxExp},
 (* Find bc, singularities and radius *)
@@ -729,14 +815,18 @@ radius=ExpectedConvergenceRadius[bc,sing,var];
 
 (* solution table *)
 solutionTable=Table[Table[Coefficient[Solution[][[i]],eps,j],{j,MinEpsExponent,EpsilonOrderPrivate}],{i,1,NumberMasterIntegrals}];
+solTruncated=If[Length[Cases[solutionTable,Power[var,Complex[_,_]],Infinity]]>0,
+maxExp=Cases[solutionTable,Power[xx_,Complex[re_,_]]/;!MatchQ[xx,Log[__]]->re,Infinity]//Max;
+(solutionTable/.Power[_,Complex[re_,im_]]/;re>=(maxExp-2)->0)
+,
+maxExp=Cases[solutionTable,Power[xx_,re_]/;!MatchQ[xx,Log[__]]->re,Infinity]//Max;
+(solutionTable/.Power[_,b_]/;b>=(maxExp-2)->0)
+];
 
-solTruncated=If[Length[Cases[solutionTable,Power[_,Complex[_,_]],Infinity]]>0,
-maxExp=Cases[solutionTable,Power[_,Complex[re_,_]]->re,Infinity]//Max;
-(solutionTable/.Power[x_,Complex[re_,im_]]/;re>=(maxExp-2)->0)
-,(solutionTable/.Power[x_,b_]/;b>=(ExpansionOrderPrivate-2)->0)];
 (* estimate error *)
-newErr=((solutionTable-solTruncated)/.var->bc+radius )//Abs//Max//N;
+newErr=((solutionTable-solTruncated)/.var->bc+radius )//Abs//Max;
 ErrorEstimate=Max[newErr,ErrorEstimate];
+If[N[ErrorEstimate]===N[0],ErrorEstimate=N[ErrorEstimate,50];,ErrorEstimate=N[ErrorEstimate];];
 ErrorEstimate
 ];
 
@@ -771,6 +861,7 @@ lineT=Join[lineT,StraightLine[points[[i]],points[[i+1]],Param]];
 ,{i,1,Length[points]-1}];
 {points/.{List->Points},ToSegments[lineT], lineParam}
 ];
+
 DropDuplicates[pointList_List]:=Module[{res={}, check={}},
 check=Table[Abs[(pointList[[i]]-pointList[[i+1]])]>=10^-$MachinePrecision,{i,1,Length[pointList]-1}];
 res=Append[res,pointList[[1]]];
@@ -779,6 +870,7 @@ If[MatchQ[check[[i]],True], res=Append[res,pointList[[i+1]]];];
 ,{i,1,Length[check]}];
 res
 ];
+
 ToList[Func_[Something__]]:=List[Something];
 ToSegments[List[Something__]]:=Segments[Something];
 
@@ -795,28 +887,29 @@ OtherVariablesBC=Append[OtherVariablesBC,VariablesEq[[i]]->CurrentBC[[i]]];
 ];
 ,{i,1,Length[VariablesEq]}];
 CurrentBCLineParam=Solve[Segment== newPointBC, LineParam,WorkingPrecision->InternalWorkingPrecisionPrivate][[1,1,2]]//Chop;
+(* If the starting point is a singularity move away *)
 If[LogarithmicExpansionPrivate&& CloseToSing[oldPoint,sing],CurrentExpansionPoint=CurrentBCLineParam; ];
 If[LogarithmicExpansionPrivate&& !CloseToSing[oldPoint,sing],
-(* singolarit\[AGrave] sulla linea *)
-res=Table[Reduce[{sing[[i]]==Segment[[1]],Abs[Im[LineParam]]<=1*^-10},LineParam],{i,1,Length[sing]}]/.{(LineParam==val_)->Re[val],False->Infinity};
+res=Table[Reduce[{sing[[i]]==Segment[[1]],Abs[Im[LineParam]]<=1*^-15},LineParam],{i,1,Length[sing]}]/.{(LineParam==val_)->Re[val],False->Infinity};
 count=Count[res,Infinity];
 res=Sort[res];
 res=Drop[res,-count];
 If[Length[res]==0,CurrentExpansionPoint=CurrentBCLineParam;,
 (* nexsing *)
 Do[
-If[Abs[sing[[i]]-FinalPoint]<=1*^-10, nextSing=FinalPoint; Break[];];
+If[Abs[sing[[i]]-FinalPoint]<=1*^-15, nextSing=FinalPoint; Break[];];
 If[res[[i]]>CurrentBCLineParam, nextSing=Segment[[1]]/.LineParam->res[[i]]; Break[];,nextSing=Segment[[1]]/.LineParam->res[[i]];];
 ,{i,1,Length[res]}];
 
 If[Length[sing]==1,radConvergence=1*^5; ,
 (* closestSing per nextSing *)
 l=((Abs[#-nextSing]&)/@sing)//ChopDigits;
-l=l/.x_/;x<1*^-10->Infinity;
+l=l/.x_/;x<1*^-15->Infinity;
 pos=Position[l,Min[l]][[1,1]];
 closestSing=sing[[pos]];
-(* radConvergence *)
-radConvergence=Abs[(closestSing-nextSing)/RadiusOfConvergencePrivate];
+radConvergence=Min[Abs[closestSing-nextSing],100];
+
+radConvergence=radConvergence/RadiusOfConvergencePrivate;
 ];
 If[LogarithmicExpansionPrivate&& Abs[newPointBC-nextSing]<=radConvergence,
 CurrentExpansionPoint=Solve[Segment[[1]]== nextSing, LineParam,WorkingPrecision->InternalWorkingPrecisionPrivate][[1,1,2]]//Chop;
@@ -829,20 +922,20 @@ CurrentExpansionPoint=CurrentBCLineParam;
 ];
 (* Create new Boundary Conditions *)
 SystemOfDifferentialEquation=Drop[SystemOfDifferentialEquation, -NumberMasterIntegrals];
-NewBoundaryConditions=(MasterIntegrals/.{KinematicVar->newPointBC})//SetPrec;
+NewBoundaryConditions=MasterIntegrals/.({KinematicVar->newPointBC}//SetPrec);
 NewBoundaryConditions=Table[-(MasterIntegralsFunctions[[j]]/.Join[{KinematicVar->newPointBC},OtherVariablesBC])+ NewBoundaryConditions[[j]]==0,{j,1,Length[NewBoundaryConditions]}];
 SystemOfDifferentialEquation=Join[SystemOfDifferentialEquation,NewBoundaryConditions];
 UpdateSystemEpsilonExpanded[];
 ];
 
-ExpectedConvergenceRadius[Point_,Sin_,KinematicVariable_]:=Module[{rad=1*^5,pointBoundary},
+ExpectedConvergenceRadius[Point_,Sin_,KinematicVariable_]:=Module[{rad=1*^10,pointBoundary},
 pointBoundary=Point;
 Do[
-If[Norm[Sin[[i]]-pointBoundary]>1*^-10,
-rad = Min[rad,Norm[pointBoundary-Sin[[i]]]];
+If[Norm[Sin[[i]]-pointBoundary]>1*^-15,
+rad = Min[rad,Abs[pointBoundary-Sin[[i]]]];
 ];
 ,{i,1,Length[Sin]}];
-rad*1/RadiusOfConvergencePrivate
+Return[rad*1/RadiusOfConvergencePrivate];
 ];
 
 (* 
@@ -859,10 +952,10 @@ Return[solutions/.Equal->Rule]
 ];
 
 MakeHomogeneus[Equation_,fun_]:=Module[{coeff1,coeff2,table},
-table=Table[Equation[[i,1]],{i,1,Length[Equation]}];
-coeff1=Table[Coefficient[table[[i]],fun],{i,1,Length[Equation]}];
-coeff2=Table[Coefficient[table[[i]],D[fun,tInt]],{i,1,Length[Equation]}];
-Return[Table[coeff1[[i]] . fun + coeff2[[i]] . D[fun,tInt]==0,{i,1,Length[Equation]}]];
+table=Table[Equation[[ieq,1]],{ieq,Length[Equation]}];
+coeff1=Table[Coefficient[table[[ieq]],fun],{ieq,Length[Equation]}];
+coeff2=Table[Coefficient[table[[ieq]],D[fun,tInt]],{ieq,Length[Equation]}];
+Return[Table[coeff1[[ieq]] . fun + coeff2[[ieq]] . D[fun,tInt]==0,{ieq,Length[Equation]}]];
 ];
 
 InomogeusPart[equation_]:=Module[{LHS},
@@ -870,7 +963,7 @@ LHS=equation/.Equal-> Subtract;
 -LHS/.{Subscript[f, _]->(0&)}
 ];
 
-ClearSeries[series_,param_,order_:ExpansionOrderPrivate]:=Module[{},
+ClearSeries[series_,param_,orderToBeDeleted_:ExpansionOrderPrivate]:=Module[{},
 If[Length[Cases[\!\(\*
 TagBox[
 StyleBox[
@@ -882,9 +975,9 @@ ShowSpecialCharacters->False,
 ShowStringCharacters->True,
 NumberMarks->True],
 FullForm]\),Infinity]]>0,
-Return[series/. param^Complex[re_,im_]/;re>order->0];
+Return[series/. param^Complex[re_,im_]/;re>orderToBeDeleted->0];
 ];
-Return[series/. param^b_/;b>order->0];
+Return[series/. param^b_/;b>orderToBeDeleted->0];
 ];
 
 ToListAlways[Something_]:=If[Something[[0]]==List, Return[Something],Return[List[Something]]];
@@ -956,7 +1049,7 @@ OtherVarBCs=Join[OtherVarBCs,{VariablesEq[[i]]->CurrentBC[[i]]}];
 ];
 ,{i,1,Length[VariablesEq]}];
 
-If[Abs[BoundCond-destination]<1*^-5 && PredefinedLine==={},
+If[Abs[BoundCond-destination]<1*^-15 && PredefinedLine==={},
 If[MasterIntegrals===MasterIntegralsFunctions,
 SolveSystem[var];,
 PrintInfo["The system is already solved in ",var,"=",destination//N];
@@ -1026,6 +1119,7 @@ PrintInfo["Moving from the point ",KinVar,"=", Points[[i]]//N, " to ",KinVar,"="
 Do[
 If[MatchQ[KinVar,VariablesEq[[k]]],index=k; Break[];];
 ,{k,1,Length[VariablesEq]}];
+
 oldPoint=CurrentBC[[index]];
 SolveSeriesExpansionSafe[Segments[[i,1]],KinVar,False,False];
 pointBegin=Segments[[i,1]]/.LineParam->CurrentExpansionPoint;
@@ -1034,9 +1128,12 @@ newPointLineParam=Reduce[{Norm[pointBegin-Segments[[i]]]==radius,Element[LinePar
 newPoint=Segments[[i]]/.newPointLineParam;
 
 While[Norm[oldPoint-Points[[i+1]]]>= radius ,
+
 UpdateBoundaryConditions[newPoint[[1]],Segments[[i]],LineParam,KinVar,Singul//Sort,Points[[i+1]],oldPoint];
 PrintInfo["The new point is: ",KinVar,"=",Segments[[i,1]]/.{LineParam->CurrentExpansionPoint}//N];
+
 oldPoint=Segments[[i,1]]/.{LineParam->CurrentExpansionPoint};
+
 
 SolveSeriesExpansionSafe[Segments[[i,1]],KinVar,False,False];
 
@@ -1044,9 +1141,14 @@ radius=ExpectedConvergenceRadius[oldPoint,Singul,KinVar];
 newPointLineParam=Reduce[{Norm[oldPoint-Segments[[i]]]==radius,Element[LineParam, Reals],LineParam>= 0},LineParam]//Num//Bigger;
 newPoint=Segments[[i]]/.newPointLineParam;
 (* If the last point is a singularity and I am close to it Break[]; *)
+
 If[CloseToSing[Points[[i+1]],Singul//Sort],
 l=((Abs[#-Points[[i+1]]]&)/@Singul)//ChopDigits;
-l=l/.x_/;x<1*^-10->Infinity;
+l=l/.x_/;x<1*^-15->Infinity;
+
+(* If there is only one singularity we can jump directly on it *)
+If[Min[l]===Infinity,Break[];];
+
 pos=Position[l,Min[l]][[1,1]];
 closestSing=Singul[[pos]];
 rad=Abs[(closestSing-Points[[i+1]])/RadiusOfConvergencePrivate];
@@ -1057,6 +1159,7 @@ If[Abs[newPoint[[1]]-Points[[i+1]]]<= rad,Break[];];
 If[i!=Length[Segments],
 nextPT=Points[[i+1]];
 If[CloseToSing[Points[[i+1]],Singul],
+(*Print["newPoint ",newPoint//N];*)
 UpdateBoundaryConditions[newPoint[[1]],Segments[[i]],LineParam,KinVar,Singul//Sort,Points[[i+1]],oldPoint];
 
 PrintInfo["The new point is: ",KinVar,"=",Segments[[i,1]]/.{LineParam->CurrentExpansionPoint}//N];
@@ -1079,17 +1182,17 @@ line={LineParam+Points[[-1]]};lastPoint=Points[[-1]];
 ];
 lasterCentre=(Segments[[-1,1]]/.tInt->CurrentExpansionPoint);
 UpdateBoundaryConditions[lastPoint,line,LineParam,KinVar,Singul//Sort,Points[[-1]],oldPoint];
-If[Abs[lasterCentre-Points[[-1]]]>1*^-10,
+If[Abs[lasterCentre-Points[[-1]]]>1*^-15,
 If[!CloseToSing[Points[[-1]],Singul],CurrentExpansionPoint=0;];
 SolveSeriesExpansionSafe[line[[1]],KinVar,False,False];
 ];
 If[CloseToSing[Points[[-1]],Singul//Sort], PackageConfiguration["LogarithmicExpansion"]=LogarithmicExpansionPrivateTemp;];
 
-PrintInfo["I arrived at ",KinVar,"=",Points[[-1]]//N, ". The error estimate is: ",EstimateError[KinVar],".\nUse Solution[] or SolutionValue[] to access the solution, or CreteGraph to plot it."];
+PrintInfo["I arrived at ",KinVar,"=",Points[[-1]]//N, ". The error estimate is: ",EstimateError[KinVar],". The radius of convergence is: ",ExpectedConvergenceRadius[Points[[-1]],Singul,KinVar]//N,".\nUse Solution[] or SolutionValue[] to access the solution, or CreteGraph to plot it."];
 ];
 
 CloseToSing[point_,sing_]:=Module[{},
-If[ContainsAny[Cases[sing, x_/;Abs[x-point]<= 1*^-10-> True],{True}], True,False]
+If[ContainsAny[Cases[sing, x_/;Abs[x-point]<= 1*^-15-> True],{True}], True,False]
 ];
 
 AnalyticContinuation[Series_,KinematicVariable_,LineParametriz_,PointExp_]:=Module[{prescription,currentBoundary},
@@ -1210,7 +1313,6 @@ PackageConfiguration["LogarithmicSingularities"]=LogarithmicSingularitiesTmp;
 PackageConfiguration["SafeSingularities"]=SafeSingularitiesTmp;
 ];
 
-
 SaveCurrentState[]:=Module[{},
 SystemOfDifferentialEquationBackup = SystemOfDifferentialEquation;
 SystemEpsilonExpandedBackup = SystemEpsilonExpanded;
@@ -1319,7 +1421,7 @@ Destination[[j]]=currBCforOtherVar[[j-offset,2]];
 
 PrintInfo["Transporting Boundary conditions to ",Table[VariablesEq[[i]]-> Destination[[i]]//N,{i,1,Length[VariablesEq]}]];
 Do[
-If[Abs[Destination[[i]]-CurrentBC[[i]]]>1*^-10, TransportVariable[VariablesEq[[i]],Destination[[i]]];];
+If[Abs[Destination[[i]]-CurrentBC[[i]]]>1*^-15, TransportVariable[VariablesEq[[i]],Destination[[i]]];];
 ,{i,1,Length[VariablesEq]}];
 ];
 
@@ -1380,9 +1482,6 @@ DeterminePath[Var_,FromExt_,DestinationExt_,LogSingExt_,SafeSingExt_:{}]:=
 Module[{LogSing,LogSingIm,LogSingRe,SafeSing,Sing,Prescription,CorrStart=0,CorrEnd=0,Corr,Height,maxReSing=-Infinity,moreRight,moreLeft,pointsList={},From=FromExt,Destination=DestinationExt,HeightStart,HeightEnd,tmp,offsetStart=0,offsetEnd=0,prescrStart=1,prescrEnd=1,offset=0,sgnStart=1,sgnEnd=1,sgn=1},
 LogSing=LogSingExt//SetPrec;
 SafeSing=DeleteCases[SafeSingExt,x_/;(x==From||x==Destination)]//SetPrec;
-
-LogSing=DeleteCases[LogSing,x_/;Re[x]<Min[Re[From],Re[Destination]]];
-SafeSing=DeleteCases[SafeSing,x_/;Re[x]<Min[Re[From],Re[Destination]]];
 Sing=Join[LogSing,SafeSing];
 
 (* I\[Delta] prescription *)
@@ -1394,6 +1493,9 @@ LogSing=Conjugate[LogSing];
 SafeSing=Conjugate[SafeSing];
 Sing=Conjugate[Sing];
 ];
+
+LogSing=DeleteCases[LogSing,x_/;Re[x]<Min[Re[From],Re[Destination]]];
+SafeSing=DeleteCases[SafeSing,x_/;Re[x]<Min[Re[From],Re[Destination]]];
 
 AppendTo[pointsList,From];
 
@@ -1420,6 +1522,7 @@ If[Prescription===-1,Return[CreateLine[Conjugate[pointsList]]];];
 Return[CreateLine[pointsList]];
 ,
 pointsList={From,Re[From]+I  (Im[From]+Height/2),Re[Destination]+ I (Im[From]+Height/2),Destination};
+(*pointsList={From,Re[From]+I  (LogSingIm[[CorrStart+offsetStart]]+sgnStartHeight/2),Re[Destination]+ I (LogSingIm[[CorrStart+offsetStart]]+sgnStartHeight/2),Destination};*)
 If[Prescription===-1,Return[CreateLine[Conjugate[pointsList]]];];
 Return[CreateLine[pointsList]];
 ];
@@ -1441,6 +1544,7 @@ moreRight=From;moreLeft=Destination;Corr=CorrEnd;Height=HeightEnd;offset=offsetE
 moreRight=Destination;moreLeft=From;Corr=CorrStart;Height=HeightStart;offset=offsetStart;sgn=sgnStart;
 ];
 
+(* change into 0.5 *)
 If[Re[moreRight]>=( maxReSing+1/2),
 (* If the smallest one is to the left of maxReSing+1, check is it is in the third *)
 If[(Re[moreLeft]<( maxReSing+1/2))&&!(LogSingIm[[Corr]]+Height/3<=Im[moreLeft]<=LogSingIm[[Corr+1]] -Height/3),
@@ -1460,7 +1564,6 @@ Return[CreateLine[pointsList]];
 
 HeightStart=Min[LogSingIm[[CorrStart+1]]-LogSingIm[[CorrStart]],1];
 HeightEnd=Min[LogSingIm[[CorrEnd+1]]-LogSingIm[[CorrEnd]],1];
-
 If[Abs[Im[From]-LogSingIm[[CorrStart+1]]]<=HeightStart/2||Abs[Im[From]-LogSingIm[[CorrStart]]]<=HeightStart/2, 
  AppendTo[pointsList,Re[From]+ I (LogSingIm[[CorrStart+offsetStart]]+sgnStart HeightStart/2)];
 AppendTo[pointsList,maxReSing+0.5+ I (LogSingIm[[CorrStart+offsetStart]]+sgnStart HeightStart/2)];
@@ -1474,9 +1577,7 @@ AppendTo[pointsList,Re[Destination] +I  (LogSingIm[[CorrEnd+offsetEnd]]+sgnEnd H
 ,
 AppendTo[pointsList,maxReSing+0.5+ I Im[Destination]];
 ];
-
 AppendTo[pointsList,Destination];
-
 If[Prescription===-1,Return[CreateLine[Conjugate[pointsList]]];];
 Return[CreateLine[pointsList]];
 ];
@@ -1524,72 +1625,78 @@ If[IsNumeric[boundaryConditions],
 result=DetermineNumericBoundaryConditions[completeSolutions,boundaryConditions,point];
 Return[result];
 ];
-result=DetermineAsymptoticBoundaryConditions[completeSolutions,boundaryConditions,point];
-If[Length[result]=!=Length[boundaryConditions],PrintError["I was not able to fix the boundary conditions for MI: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>". Aborting the computation."];];
+result=DetermineAsymptoticBoundaryConditions[completeSolutions/.result,boundaryConditions,point];
+
+If[Length[result]=!=Length[boundaryConditions]||FreeQ[result,C[_]],PrintError["I was not able to fix the boundary conditions for MI: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>". Aborting the computation."];];
 Return[result];
 ];
 
 IsNumeric[list_List]:=!MemberQ[NumericQ/@list,False];
 
-DetermineNumericBoundaryConditions[completeSolutionNum_,boundaryConditionNum_,pointBCNum_,alreadyFixedConstants_:0]:=Module[{limits,maxLog,logCoeff,solLog={},resultNumeric,equationsCoeffs,unknowns,asymptotic,errEstimate=Max[ErrorEstimate,1*^-13]},
-asymptotic=MyAsymptotic[Chop[completeSolutionNum,errEstimate]//SetPrec,sInt->pointBCNum];
-limits=MyLimit[Chop[completeSolutionNum,errEstimate]//SetPrec,sInt->pointBCNum];
+DetermineNumericBoundaryConditions[completeSolutionNum_,boundaryConditionNum_,pointBCNum_,alreadyFixedConstants_:0]:=Module[{limits,maxLog,logCoeff,solLog={},resultNumeric,equationsCoeffs,unknowns,asymptotic},
+asymptotic=MyAsymptotic[ChopDigits[completeSolutionNum]//SetPrec,sInt->pointBCNum];
+limits=MyLimit[ChopDigits[completeSolutionNum]//SetPrec,sInt->pointBCNum];
 If[FindVar[limits, Infinity]||FindVar[limits, ComplexInfinity]||FindVar[limits,DirectedInfinity[_]]||FindVar[limits,Indeterminate],
-maxLog=Exponent[Chop[asymptotic,errEstimate],Log[sInt]]//Max;
+maxLog=Exponent[asymptotic,Log[sInt]]//Max;
 logCoeff=Table[LogicalExpand[Coefficient[asymptotic,Log[sInt],i]==0],{i,0,maxLog+1}]/.{And->List}//Flatten//DeleteCases[#,True]&;
 unknowns=DeleteCases[Table[If[FindVar[asymptotic,C[i]],C[i]],{i,1,Length[boundaryConditionNum]}],Null];
-solLog=Solve[logCoeff,unknowns,Complexes,WorkingPrecision->InternalWorkingPrecisionPrivate];
+solLog=Solve[SetPrecNumber[logCoeff],unknowns,Complexes,WorkingPrecision->InternalWorkingPrecisionPrivate];
 If[solLog==={},
 PrintError["I was not able to fix the boundary conditions for MI: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>". Aborting the computation."];
 ];
 solLog=First[solLog];
 limits=MyLimit[(completeSolutionNum/.solLog//Expand//ChopDigits),sInt->pointBCNum];
 ];
+
 equationsCoeffs=DeleteCases[Table[limits[[i]]==boundaryConditionNum[[i]],{i,1,Length[limits]}],False];
-resultNumeric=Solve[equationsCoeffs,Complexes,WorkingPrecision->InternalWorkingPrecisionPrivate]//ChopDigits;
+resultNumeric=Solve[SetPrecNumber[equationsCoeffs],Complexes,WorkingPrecision->InternalWorkingPrecisionPrivate]//ChopDigits;
 If[resultNumeric=!={},resultNumeric=Join[resultNumeric[[1]],solLog];];
 If[(alreadyFixedConstants+Length[resultNumeric])===Length[boundaryConditionNum],Return[resultNumeric];];
 If[alreadyFixedConstants>0,PrintError["I was not able to fix the boundary conditions for MI: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>". Aborting the computation."];];
-If[WarningFlagPrivate,PrintWarning["The boundary conditions are not sufficient for determining the complete solution. They will be considered as an asymptotic expansion."];
-Global`sol=completeSolutionNum;
-Global`bcs=boundaryConditionNum;
-Global`pt=pointBCNum;
-Global`cost=alreadyFixedConstants;
-];
+If[WarningFlagPrivate,PrintWarning["The boundary conditions are not sufficient for determining the complete solution. They will be considered as an asymptotic expansion."];];
 
 resultNumeric=Join[resultNumeric,DetermineNumericBoundaryConditions[D[completeSolutionNum/.resultNumeric,sInt],Table[0,{i,Length[boundaryConditionNum]}],pointBCNum,Length[resultNumeric]]];
-Print[resultNumeric//N];
 Return[resultNumeric];
 ];
 
-DetermineAsymptoticBoundaryConditions[completeSolutionAsy_,boundaryConditionAsy_,pointBCAsy_]:=Module[{termsType,coeffTerms,solveCoefficients,diff},
-termsType=Expand[boundaryConditionAsy//Num]/.{Plus->List}/.{_Real->1,_Complex->1}//Flatten//DeleteDuplicates;
-coeffTerms=GetCoefficient[completeSolutionAsy-boundaryConditionAsy//ChopDigits,termsType];
-solveCoefficients=Solve[coeffTerms]//Flatten;
-If[Length[solveCoefficients]=!=Length[boundaryConditionAsy]||solveCoefficients==={},
-diff=MyAsymptotic[completeSolutionAsy-boundaryConditionAsy//ChopDigits,sInt->pointBCAsy];
-solveCoefficients=Solve[Map[Equal[#,0]&,diff],Table[C[i],{i,Length[boundaryConditionAsy]}]]//Flatten;
-If[solveCoefficients=!={},solveCoefficients=Map[MyLimit[#,sInt->pointBCAsy]&,solveCoefficients,2]];
-];
-If[Length[solveCoefficients]=!=Length[boundaryConditionAsy]||solveCoefficients==={},
-PrintError["I was not able to fix the boundary conditions for MI: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>". Aborting the computation."];];
-
+DetermineAsymptoticBoundaryConditions[completeSolutionAsy_,boundaryConditionAsy_,pointBCAsy_]:=Module[{termsType,coeffTerms,solveCoefficients},
+termsType=Num[Expand[completeSolutionAsy-boundaryConditionAsy//Expand//ChopDigits]]/.{Plus->List}/.{_Real->1,_Complex->1,C[_]->1}//Flatten//DeleteDuplicates;
+termsType=DeleteCases[termsType,elem_/;(Limit[elem,sInt->pointBCAsy]==0||elem==1)];
+coeffTerms=GetCoefficient[completeSolutionAsy-boundaryConditionAsy//Expand//ChopDigits,termsType];
+coeffTerms=DeleteCases[coeffTerms,elem_/;Limit[elem,sInt->pointBCAsy]==0];
+coeffTerms=Equal[#,0]&/@coeffTerms;
+solveCoefficients=Solve[SetPrecNumber[coeffTerms]];
+If[Length[solveCoefficients]=!=Length[boundaryConditionAsy]||solveCoefficients==={},PrintError["I was not able to fix the boundary conditions for MI: "<>ToString[SeaSyde`Private`Debug`MInumber]<>", \[Epsilon] order: "<>ToString[SeaSyde`Private`Debug`EpsOrder]<>". Aborting the computation."];];
+solveCoefficients=First[solveCoefficients];
 Return[solveCoefficients];
 ];
 
-GetCoefficient[expression_,type_]:=Module[{coefficients={}},
+GetCoefficient[expressionGC_,type_]:=Module[{coefficients={}},
 Do[
-If[NumericQ[type[[ind]]],
-AppendTo[coefficients,Select[#,FreeQ[sInt]]&/@expression];
-Continue[];
+If[FreeQ[type[[ind]],Log[_]],
+AppendTo[coefficients,Coefficient[#,sInt,Exponent[type[[ind]],sInt]]&/@expressionGC];
+,
+AppendTo[coefficients,Coefficient[expressionGC,type[[ind]]]];
 ];
 
-AppendTo[coefficients,Coefficient[expression,type[[ind]]]/.{Power[sInt,_]->0,Log[__]->0}/.sInt->0];
 ,{ind,1,Length[type]}];
 coefficients=DeleteCases[Flatten[coefficients],0];
-Return[Equal[#,0]&/@coefficients];
+Return[coefficients];
 ];
 
+MySolve[linearSystemOfEquations_]:=Module[{rank,unknownCoefficients,solutionSystem,matrixSystem,rowreduced,reducedsystem,solveFor},
+unknownCoefficients=Cases[linearSystemOfEquations,c[__],Infinity]//DeleteDuplicates//Sort//Reverse;
+matrixSystem=CoefficientArrays[linearSystemOfEquations,unknownCoefficients]//Normal//Last;
+rowreduced=RowReduce[matrixSystem,Tolerance->10^(-ChopPrecisionPrivate)]//ChopDigits;
+reducedsystem=DeleteCases[Map[Equal[#,0]&,rowreduced . unknownCoefficients],True];
+
+Check[
+solutionSystem=Solve[reducedsystem]/.{num_Real:>SetUltraPrec[num],num_Complex:>SetUltraPrec[num]};
+,
+PrintError["Error while solving the linear system in SolveFrobenius!"];
+];
+Return[solutionSystem];
+];
 
 End[];
 EndPackage[];
